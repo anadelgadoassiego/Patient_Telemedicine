@@ -3,13 +3,13 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package patient_telemedicina;
+package patient_telemedicine;
 
 /**
  *
  * @author delga
  */
-public class Patient_Telemedicina {
+public class Patient_Telemedicine {
 
     /**
      * @param args the command line arguments
