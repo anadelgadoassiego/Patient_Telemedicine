@@ -12,7 +12,7 @@ import ui.Main;
 
 public class ClientSendCharactersViaNetwork2 {
     
-    public static void main(String args[]) throws IOException {
+    public static void main(String args[]) throws IOException, Exception {
         int byteRead;
         new Main();
         //Redirect the console
@@ -23,7 +23,47 @@ public class ClientSendCharactersViaNetwork2 {
         try{
         OutputStream outputStream = socket.getOutputStream();
         DataOutputStream dout;
-        
+         while (true) {
+
+                System.out.println("What do you want to do?");
+                System.out.println("1. Create a new user");
+                System.out.println("2. Login");
+                System.out.println("0. Exit");
+                Integer choice = new Integer(0);
+
+                boolean wrongtext = false;
+                do {
+                    System.out.println("Introduce the number of the option you would like to choose: ");
+                    try {
+                        choice = Character.getNumericValue(console.read());
+                        System.out.println(choice);
+                        wrongtext = false;
+                    } catch (NumberFormatException ex) {
+                        wrongtext = true;
+                        System.out.println("It's not an int, please enter an int");
+                    }
+                } while (choice < 0 || choice > 2 || wrongtext);
+                dout = new DataOutputStream(outputStream);
+                System.out.println(dout);
+                dout.writeInt(choice);
+                switch (choice) {
+                    case 1:
+                        String response = ui.Main.newUser();
+                        dout.writeUTF(response);
+                        break;
+                    case 2:
+                        login();
+                        break;
+                    case 0:
+                        System.out.println("Finish");
+                        releaseResources(outputStream, console, socket);
+                        System.exit(0);
+                        return;
+                    default:
+                        break;
+                }
+            }
+     /*   
         while (true) {
             //Read from our console
             byteRead = console.read();
@@ -38,6 +78,7 @@ public class ClientSendCharactersViaNetwork2 {
                 System.exit(0);
             }
         }
+*/
         } catch (IOException ex) {
             Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
         }

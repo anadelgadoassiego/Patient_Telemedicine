@@ -13,7 +13,9 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
+import java.util.ArrayList;
 import java.util.List;
+import pojos.Patient;
 
 /**
  *
@@ -25,110 +27,39 @@ public class Main {
         public static void menu() throws Exception {
             reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Welcome to our database!");
-            // System.out.println("Do you want to create the tables?");
-            while (true) {
-
-                System.out.println("What do you want to do?");
-                System.out.println("1. Create a new user");
-                System.out.println("2. Login");
-                System.out.println("0. Exit");
-                Integer choice = new Integer(0);
-
-                boolean wrongtext = false;
-                do {
-                    System.out.println("Introduce the number of the option you would like to choose: ");
-                    try {
-                        choice = Integer.parseInt(reader.readLine());
-                        wrongtext = false;
-                    } catch (NumberFormatException ex) {
-                        wrongtext = true;
-                        System.out.println("It's not an int, please enter an int");
-                    }
-                } while (choice < 0 || choice > 2 || wrongtext);
-                switch (choice) {
-                    case 1:
-                        newUser();
-                        break;
-                    case 2:
-                        login();
-                        break;
-                    case 0:
-                        dbManager.disconnect();
-                        userManager.disconnect();
-                        return;
-                    default:
-                        break;
-                }
-            }
-
+            
         }
 
-      /*
-        private static void newUser() throws Exception {
-            List<Role> roles = userManager.getRoles();
-            if (roles.isEmpty()) {
-                System.out.println("There are not roles, please create the roles");
-                return;
-            }
+     
+        public static String newUser() throws Exception {
+            String response = "";
+            System.out.println("Please, enter the following information: ");
+            System.out.println("Name: ");
+            String name = reader.readLine();
+            System.out.println("Age: ");
+            Integer age = Integer.parseInt(reader.readLine());
+            System.out.println("Weight: ");
+            Float weight = Float.parseFloat(reader.readLine());
+            System.out.println("Height: ");
+            Float height = Float.parseFloat(reader.readLine());
+            System.out.println("Gender: ");
+            String gender = reader.readLine();
+       
             System.out.println("Please type the new user information: ");
-            System.out.print("Username: ");
+            System.out.print("DNI (this will be your username): ");
             String username = reader.readLine();
             System.out.print("Password: ");
             String password = reader.readLine();
 
-            // Create the password's hash
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes());
-            byte[] hash = md.digest();
+            
             // Show all the roles and let the user choose one
-            Integer roleId = new Integer(0);
-            boolean wrongtext = true;
-            String exit = "1";
-            do {
-                if (exit.equals("yes") || exit.equals("Yes")) {
-                    break;
-                }
-                for (Role role : roles) {
-
-                    System.out.println(role);
-
-                }
-                System.out.print("Type the chosen role ID: ");
-                try {
-                    roleId = Integer.parseInt(reader.readLine());
-                    wrongtext = false;
-                } catch (NumberFormatException ex) {
-                    wrongtext = true;
-                    System.out.println("It's not an int, please enter an int");
-                }
-                if (roleId != 2 && roleId != 1) {
-                    System.out.println("That's not a valid ID, if you want to exit this option type 'yes': ");
-                    exit = reader.readLine();
-                }
-                if (roleId == 1) {
-                    System.out.println("Patients can only be created by doctors (not here). Introduce another Id: ");
-                    roleId = 3;
-                }
-            } while (roleId != 1 && roleId != 2);
-            if (exit.contentEquals("yes") || exit.contentEquals("Yes")) {
-                return;
-            }
-            Role chosenRole = userManager.getRole(roleId);
-            // Create the user and store it
-            User user = new User(username, hash, chosenRole);
-
-            userManager.createUser(user);
-
-            //String pharmacyName = username;
-            System.out.println("Enter your full name: ");
-            String fullname = reader.readLine();
-
-
-            Doctor doctor = new Doctor(fullname,username);
-            doctorManager.add(doctor);
-
+            Integer roleId = 1;
+            
+            response = name+","+age+","+weight+","+height+","+gender+","+username+","+password+","+roleId;
+            
+            return response;
         }
-*/
+
         private static void login() throws Exception {
             System.out.println("Please input your credentials");
             System.out.print("Username: ");
@@ -318,6 +249,61 @@ public class Main {
 
     public static String getPassword(int length) {
         return getPassword(numbers + caps + low_case, length);
+    }
+    
+    private static void addPatient() throws Exception {
+        System.out.println("Please, enter the following information: ");
+        System.out.println("Name: ");
+        String name = reader.readLine();
+        System.out.println("Age: ");
+        Integer age = Integer.parseInt(reader.readLine());
+        System.out.println("Weight: ");
+        Float weight = Float.parseFloat(reader.readLine());
+        System.out.println("Height: ");
+        Float height = Float.parseFloat(reader.readLine());
+        System.out.println("Gender: ");
+        String gender = reader.readLine();
+
+        Patient patient = new Patient(name, age, weight, height, gender);
+
+        String username = "";
+        boolean distinctUser = false;
+        do {
+            System.out.println("Introduce a username for the patient: ");
+            username = reader.readLine();
+            List<String> existUsernames = new ArrayList<String>();
+            existUsernames = patientManager.getUsernames();
+            if (existUsernames.contains(username)) {
+                distinctUser = true;
+            } else {
+                distinctUser = false;
+            }
+        } while (distinctUser);
+
+        String UserName = username;
+        System.out.print("Password: ");
+        String password = getPassword();
+      
+        // Create the password's hash
+        MessageDigest md = MessageDigest.getInstance("MD5");
+        md.update(password.getBytes());
+        byte[] hash = md.digest();
+        int roleId = 1;
+        // Get the chosen role from the database
+        Role chosenRole = userManager.getRole(roleId);
+        // Create the user and store it
+        User user = new User(UserName, hash, chosenRole);
+        userManager.createUser(user);
+        patient.setNameuser(UserName);
+        patientManager.add(patient);
+        int patientId=dbManager.getLastId();
+        System.out.println(patientId);
+        int doctorId = doctorManager.getId(doctorName);
+        System.out.println(doctorId);
+        doctorManager.asign(doctorId, patientId);
+
+        
+        
     }
 
     public static String getPassword(String key, int length) {
