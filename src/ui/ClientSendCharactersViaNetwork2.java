@@ -19,7 +19,7 @@ public class ClientSendCharactersViaNetwork2 {
         InputStream console = (System.in);
         //You should change localhost by the IP address 
         //We are connecting to a "service" in an IP and port 9000
-        Socket socket = new Socket("10.60.59.33", 9000);
+        Socket socket = new Socket("192.168.1.35", 9000);
         try{
         OutputStream outputStream = socket.getOutputStream();
         DataOutputStream dout;
@@ -36,7 +36,6 @@ public class ClientSendCharactersViaNetwork2 {
                     System.out.println("Introduce the number of the option you would like to choose: ");
                     try {
                         choice = Character.getNumericValue(console.read());
-                        System.out.println(choice);
                         wrongtext = false;
                     } catch (NumberFormatException ex) {
                         wrongtext = true;
@@ -52,7 +51,7 @@ public class ClientSendCharactersViaNetwork2 {
                         dout.writeUTF(response);
                         break;
                     case 2:
-                        login();
+                        //login();
                         break;
                     case 0:
                         System.out.println("Finish");

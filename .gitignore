@@ -1,3 +1,5 @@
 *.jar
 *.war
 *.zip
+/build/
+/nbproject/private/

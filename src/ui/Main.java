@@ -16,6 +16,7 @@ import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
 import pojos.Patient;
+import static utils.InputOutput.*;
 
 /**
  *
@@ -33,29 +34,24 @@ public class Main {
      
         public static String newUser() throws Exception {
             String response = "";
-            System.out.println("Please, enter the following information: ");
-            System.out.println("Name: ");
-            String name = reader.readLine();
-            System.out.println("Age: ");
-            Integer age = Integer.parseInt(reader.readLine());
-            System.out.println("Weight: ");
-            Float weight = Float.parseFloat(reader.readLine());
-            System.out.println("Height: ");
-            Float height = Float.parseFloat(reader.readLine());
-            System.out.println("Gender: ");
-            String gender = reader.readLine();
+            /*System.out.println("Please, enter the following information: ");
+            String name = getStringFromKeyboard("Name: ");
+            Integer age = getIntFromKeyboard("Age: ");
+            Float weight = getFloatFromKeyboard("Weight: ");
+            Float height = getFloatFromKeyboard("Height: ");
+            String gender = getStringFromKeyboard("Gender: ");
        
             System.out.println("Please type the new user information: ");
-            System.out.print("DNI (this will be your username): ");
-            String username = reader.readLine();
-            System.out.print("Password: ");
-            String password = reader.readLine();
+            String username = getStringFromKeyboard("DNI (this will be your username): ");
+            String password = getStringFromKeyboard("Password: ");
 
             
             // Show all the roles and let the user choose one
             Integer roleId = 1;
             
-            response = name+","+age+","+weight+","+height+","+gender+","+username+","+password+","+roleId;
+            response = name+","+age+","+weight+","+height+","+gender+","+username+","+password+","+roleId;"*/
+            response = "Amancio,88,100.0,150.55,Male,Amancio123,Amancio123,1";
+            System.out.println(response);
             
             return response;
         }
