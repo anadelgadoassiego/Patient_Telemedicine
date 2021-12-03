@@ -15,6 +15,8 @@ import java.nio.file.Paths;
 import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.List;
+import pojos.Ecg;
+import pojos.Emg;
 import pojos.Patient;
 import static utils.InputOutput.*;
 
@@ -66,61 +68,9 @@ public class Main {
             return response;
         }
         
-        public static void patientMenu() throws Exception {
-        while (true) {
-            System.out.println("What would you like to do?");
-            System.out.println("1. Complete form");
-            System.out.println("2. Add EMG");
-            System.out.println("3. Add ECG");
-            System.out.println("4. Search EMG by start date");
-            System.out.println("5. Search ECG by start date");
-            System.out.println("6. Change your user name");
-            System.out.println("7. Change your password");
-            System.out.println("8. Go back");
-            Integer choice = new Integer(0);
-            boolean wrongtext = false;
-            do {
-                System.out.println("Introduce the number of the option you would like to choose: ");
-                try {
-                    choice = Integer.parseInt(reader.readLine());
-                    wrongtext = false;
-                } catch (NumberFormatException ex) {
-                    wrongtext = true;
-                    System.out.println("It's not an int, please enter an int");
-                }
-            } while (choice < 0 || choice > 8 || wrongtext);
-            switch (choice) {
-                case 1:
-                    completeForm();
-                    break;
-                case 2:
-                    addEMG();
-                    break;
-                case 3:
-                    addECG();
-                    break;
-                case 4:
-                    searchEMGByName();
-                    break;
-                case 5:
-                    searchECGByName();
-                    break;
-                case 6:
-                    String username = userManager.updateUsername(patientName);
-                    patientManager.updateUsername(patientName, username);
-                    return;
-                case 7:
-                    userManager.updatePassword(patientName);
-                    return;
-                case 8:
-                    return;
-            }
-        }
-    }
-
-    private static void completeForm() throws Exception {
-        Integer patient_id = patientManager.searchByUsername(patientName);
-        Patient patient = patientManager.getPatient(patient_id);
+        
+    public static String completeForm() throws Exception {
+        String response_form = "";
 
         System.out.println("Please answer the following questions.");
         System.out.println("For each question, enter a number between 1 (not likely) to 10 (very likely)");
@@ -145,62 +95,59 @@ public class Main {
         Integer q19 = getIntFromKeyboard1to10("19. Do your teeth or gums feel sore when you wake up in the morning?");
         Integer q20 = getIntFromKeyboard1to10("20. Have you noticed that you have considerable wear on your teeth?");
         
-       
-        String nameForm = patientName+("_form.txt");
-        File file = new File(nameForm);
-        PrintWriter printWriter = null;
-        try {
-            printWriter = new PrintWriter(file);
-            printWriter.print("1. Do you have difficulty or pain when opening your mouth, for example, when yawning? -> " + q1.toString());
-            printWriter.print("\n2. Do you feel your jaw “sticking”, “locking” or “popping out”? -> " + q2.toString());
-            printWriter.print("\n3. Do you have difficulty or pain when you chew, speak, or use your jaws? -> " + q3.toString());
-            printWriter.print("\n4. Have you noticed noises in your jaw joints? -> " + q4.toString());
-            printWriter.print("\n5. Do your jaws regularly feel stiff or clenched? -> " + q5.toString());
-            printWriter.print("\n6. Do you have pain around your ears, temples, or cheeks? -> " + q6.toString());
-            printWriter.print("\n7. Do you have frequent headaches or neck pain? -> " + q7.toString());
-            printWriter.print("\n8. Have you had a recent injury or trauma to your head, neck, or jaw? -> " + q8.toString());
-            printWriter.print("\n9. Have you noticed or felt any recent change in your bite? -> " + q9.toString());
-            printWriter.print("\n10. Have you ever been treated for a jaw joint problem? -> " + q10.toString());
-            printWriter.print("\n11. Have you noticed that you grind or clench your teeth frequently during sleep? -> " + q11.toString());
-            printWriter.print("\n12. Has anyone heard you grind your teeth at night? -> " + q12.toString());
-            printWriter.print("\n13. Did your jaw feel sore or fatigued when you woke up in the morning? -> " + q13.toString());
-            printWriter.print("\n14. Do you ever have a momentary headache when you wake up in the morning? -> " + q14.toString());
-            printWriter.print("\n15. Have you noticed that you grind/clench your teeth during the day? -> " + q15.toString());
-            printWriter.print("\n16. Do you have difficulty opening your mouth wide when you wake up? -> " + q16.toString());
-            printWriter.print("\n17. Do you feel pain in your teeth when they come in contact with cold air or liquids? -> " + q17.toString());
-            printWriter.print("\n18. Do you feel your jaw joint lock or make a clicking sound when you move it? -> " + q18.toString());
-            printWriter.print("\n19. Do your teeth or gums feel sore when you wake up in the morning? -> " + q19.toString());
-            printWriter.print("\n20. Have you noticed that you have considerable wear on your teeth? -> " + q20.toString());
-
-        } catch (IOException ex) {
-            System.out.println("There was an error while saving");
-
-        } finally {
-            if (printWriter != null) {
-                printWriter.close();
-            }
-
-        }
-        String filePath = nameForm;
-        byte[] patient_form = Files.readAllBytes(Paths.get(filePath));
-        System.out.println(patient_form);
-        patient.setPatient_form(patient_form);
-        patientManager.addForm(patient);
-        System.out.println("Form saved successfully");
-
-
+        
+        response_form = q1+","+q2+","+q3+","+q4+","+q5+","+q6+","+q7+","+q8+","+q9+","+q10+","+q11+","+q12+","+q13+","+q14+","+q15+","+q16+","+q17+","+q18+","+q19+","+q20;
+        return response_form;
     }
 
-    private static void searchECGByName() throws Exception{
-        Integer patient_id = patientManager.searchByUsername(patientName);
-        List<Ecg> ecgList = ecgManager.getECGpatient(patient_id);
-        searchECGByName_patient(ecgList);
+    
+    public static void searchEMGByName_patient(List<Emg> emgList) throws Exception{
+        String month = getStringFromKeyboard("Introduce the month: ");
+        String day = getStringFromKeyboard("Introduce day: ");
+        String name_emg = day + month ;
+        String name_select;
+        for (Emg emg  : emgList) {
+             name_select = emg.getName_emg();
+             if (name_select.contains(name_emg)){
+                System.out.println(name_select);
+             }
+        } 
+        
+        System.out.println("Introduce the number of the emg");
+        int position = Integer.parseInt(reader.readLine());
+        name_emg = day + month + "_" + position ; 
+        for (Emg emg : emgList){
+            name_select = emg.getName_emg();
+             if (name_select == name_emg){
+                System.out.println(emg);
+             }
+        }
+        
     }
     
-     private static void searchEMGByName() throws Exception{
-        Integer patient_id = patientManager.searchByUsername(patientName);
-        List<Emg> emgList = emgManager.getEMGpatient(patient_id);
-        searchEMGByName_patient(emgList);
+        
+    public static void searchECGByName_patient(List<Ecg> ecgList) throws Exception{
+        String month = getStringFromKeyboard("Introduce the month: ");
+        String day = getStringFromKeyboard("Introduce day: ");
+        String name_ecg = day + month ;
+        String name_select;
+        for (Ecg ecg  : ecgList) {
+             name_select = ecg.getName_ecg();
+             if (name_select.contains(name_ecg)){
+                System.out.println(name_select);
+             }
+        } 
+        
+        System.out.println("Introduce the number of the emg");
+        int position = Integer.parseInt(reader.readLine());
+        name_ecg = day + month + "_" + position ; 
+        for (Ecg ecg : ecgList){
+            name_select = ecg.getName_ecg();
+             if (name_select == name_ecg){
+                System.out.println(ecg);
+             }
+        }
+        
     }
     
     private static void addEMG() throws Exception {
@@ -234,8 +181,14 @@ public class Main {
         ecgManager.add(ecg);
     }
 
-    public static String getPassword(int length) {
-        return getPassword(numbers + caps + low_case, length);
+ 
+    public static String changeUsername() {
+        String newName = getStringFromKeyboard("Introduce your new username: ");
+        return newName;
+    }
+    public static String changePassword() {
+        String newPassword = getStringFromKeyboard("Introduce your new password: ");
+        return newPassword;
     }
     
     private static void addPatient() throws Exception {

@@ -68,7 +68,6 @@ public class ClientSendCharactersViaNetwork2 {
                         String okay = dint.readUTF();
                         System.out.println(okay);
                         if (okay.equals("Welcome patient !")) {
-                           ui.Main.patientMenu();
                            menuPatient();
 
                         }
@@ -105,7 +104,7 @@ public class ClientSendCharactersViaNetwork2 {
         }
     }
 
-    private static void menuPatient(){
+    private static void menuPatient() throws Exception {
         console = (System.in);
         try {
             outputStream = socket.getOutputStream();
@@ -139,7 +138,10 @@ public class ClientSendCharactersViaNetwork2 {
                 dout.writeInt(choice);
                 switch (choice) {
                     case 1:
-                        //completeForm();
+                        String response_form = ui.Main.completeForm();
+                        dout.writeUTF(response_form);
+                        String okay = dint.readUTF();
+                        System.out.println(okay);
                         break;
                     case 2:
                         //addEMG();
@@ -154,12 +156,18 @@ public class ClientSendCharactersViaNetwork2 {
                         //searchECGByName();
                         break;
                     case 6:
-                        //String username = userManager.updateUsername(patientName);
-                        //patientManager.updateUsername(patientName, username);
-                        return;
+                        String response_newUser = ui.Main.changeUsername();
+                        dout.writeUTF(response_newUser);
+                        //okay = dint.readUTF();
+                        //System.out.println(okay);
+                        break;
                     case 7:
+                        String response_newPassword = ui.Main.changePassword();
+                        dout.writeUTF(response_newPassword);
+                        //okay = dint.readUTF();
+                        //System.out.println(okay);
                         //userManager.updatePassword(patientName);
-                        return;
+                        break;
                     case 8:
                         return;
                 }
