@@ -39,7 +39,8 @@ public class InputOutput {
                 
                 System.out.println(question);
                 String stringLeida = consola.readLine();
-                while(stringLeida.isBlank()){
+                
+                while(stringLeida.equals("")||stringLeida.equals("\n")){
                 stringLeida = consola.readLine();
                 }
                 return stringLeida;

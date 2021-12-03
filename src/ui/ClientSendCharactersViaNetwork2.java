@@ -1,6 +1,7 @@
 package ui;
 
 import BITalino.BitalinoDemo;
+import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -19,10 +20,13 @@ public class ClientSendCharactersViaNetwork2 {
         InputStream console = (System.in);
         //You should change localhost by the IP address 
         //We are connecting to a "service" in an IP and port 9000
-        Socket socket = new Socket("192.168.1.35", 9000);
+        Socket socket = new Socket("10.60.59.87", 9000);
         try{
         OutputStream outputStream = socket.getOutputStream();
         DataOutputStream dout;
+        InputStream inputStream = socket.getInputStream();
+        DataInputStream dint;
+        dint= new DataInputStream(inputStream);
          while (true) {
 
                 System.out.println("What do you want to do?");
@@ -51,8 +55,19 @@ public class ClientSendCharactersViaNetwork2 {
                         dout.writeUTF(response);
                         break;
                     case 2:
-                        //login();
+                        String response_login = ui.Main.login();
+                        dout.writeUTF(response_login);
+                        String okay = dint.readUTF();
+                        System.out.println(okay);
+                        if (okay.equals("Welcome patient !")) {
+                           System.out.println("holaaaaaaaaaaaaaaaaaaa");
+                           ui.Main.patientMenu();
+                           //menuPatient();
+
+                        }
                         break;
+                        
+                        
                     case 0:
                         System.out.println("Finish");
                         releaseResources(outputStream, console, socket);

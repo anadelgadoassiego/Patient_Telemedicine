@@ -24,7 +24,8 @@ import static utils.InputOutput.*;
  */
 public class Main {
     //To initialize the bufferedReader
-        private static BufferedReader reader; // To read from the console
+        private static BufferedReader reader;
+
         public static void menu() throws Exception {
             reader = new BufferedReader(new InputStreamReader(System.in));
             System.out.println("Welcome to our database!");
@@ -34,7 +35,7 @@ public class Main {
      
         public static String newUser() throws Exception {
             String response = "";
-            /*System.out.println("Please, enter the following information: ");
+            System.out.println("Please, enter the following information: ");
             String name = getStringFromKeyboard("Name: ");
             Integer age = getIntFromKeyboard("Age: ");
             Float weight = getFloatFromKeyboard("Weight: ");
@@ -49,33 +50,23 @@ public class Main {
             // Show all the roles and let the user choose one
             Integer roleId = 1;
             
-            response = name+","+age+","+weight+","+height+","+gender+","+username+","+password+","+roleId;"*/
-            response = "Amancio,88,100.0,150.55,Male,Amancio123,Amancio123,1";
+            response = name+","+age+","+weight+","+height+","+gender+","+username+","+password+","+roleId;
+            //response = "Amancio,88,100.0,150.55,Male,Amancio123,Amancio123,1";
             System.out.println(response);
             
             return response;
         }
 
-        private static void login() throws Exception {
+        public static String login() throws Exception {
+            String response = "";
             System.out.println("Please input your credentials");
-            System.out.print("Username: ");
-            String username = reader.readLine();
-            System.out.print("Password: ");
-            String password = reader.readLine();
-            User user = userManager.checkPassword(username, password);
-            // We check if the user/password combination was OK
-            if (user == null) {
-                System.out.println("Wrong credentials, please try again!");
-            } else if (user.getRole().getRole().equalsIgnoreCase("patient")) {
-                System.out.println("Welcome patient " + username + "!");
-                patientName = username;
-                patientMenu();
-            } else {
-                System.out.println("Invalid role");
-            }
+            String username = getStringFromKeyboard("Username: ");
+            String password = getStringFromKeyboard("Password: ");
+            response = username+","+password;
+            return response;
         }
         
-    private static void patientMenu() throws Exception {
+        public static void patientMenu() throws Exception {
         while (true) {
             System.out.println("What would you like to do?");
             System.out.println("1. Complete form");
