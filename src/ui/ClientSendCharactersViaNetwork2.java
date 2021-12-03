@@ -13,19 +13,27 @@ import ui.Main;
 
 public class ClientSendCharactersViaNetwork2 {
     
+    private static OutputStream outputStream;
+    private static DataOutputStream dout;
+    private static InputStream inputStream;
+    private static Socket socket;
+    private static DataInputStream dint;
+    private static InputStream console;
+    
+    
     public static void main(String args[]) throws IOException, Exception {
         int byteRead;
-        new Main();
+        
         //Redirect the console
-        InputStream console = (System.in);
+        console = (System.in);
         //You should change localhost by the IP address 
         //We are connecting to a "service" in an IP and port 9000
-        Socket socket = new Socket("10.60.59.87", 9000);
+        socket = new Socket("10.60.59.130", 9000);
         try{
-        OutputStream outputStream = socket.getOutputStream();
-        DataOutputStream dout;
-        InputStream inputStream = socket.getInputStream();
-        DataInputStream dint;
+        outputStream = socket.getOutputStream();
+        
+        inputStream = socket.getInputStream();
+        
         dint= new DataInputStream(inputStream);
          while (true) {
 
@@ -60,9 +68,8 @@ public class ClientSendCharactersViaNetwork2 {
                         String okay = dint.readUTF();
                         System.out.println(okay);
                         if (okay.equals("Welcome patient !")) {
-                           System.out.println("holaaaaaaaaaaaaaaaaaaa");
                            ui.Main.patientMenu();
-                           //menuPatient();
+                           menuPatient();
 
                         }
                         break;
@@ -98,6 +105,71 @@ public class ClientSendCharactersViaNetwork2 {
         }
     }
 
+    private static void menuPatient(){
+        console = (System.in);
+        try {
+            outputStream = socket.getOutputStream();
+            inputStream = socket.getInputStream();
+            dint= new DataInputStream(inputStream);
+            
+            while (true) {
+                System.out.println("What would you like to do?");
+                System.out.println("1. Complete form");
+                System.out.println("2. Add EMG");
+                System.out.println("3. Add ECG");
+                System.out.println("4. Search EMG by start date");
+                System.out.println("5. Search ECG by start date");
+                System.out.println("6. Change your user name");
+                System.out.println("7. Change your password");
+                System.out.println("8. Go back");
+                Integer choice = new Integer(0);
+                boolean wrongtext = false;
+                do {
+                    System.out.println("Introduce the number of the option you would like to choose: ");
+                    try {
+                        choice = Character.getNumericValue(console.read());
+                        wrongtext = false;
+                    } catch (NumberFormatException ex) {
+                        wrongtext = true;
+                        System.out.println("It's not an int, please enter an int");
+                    }
+                } while (choice < 1 || choice > 8 || wrongtext);
+                dout = new DataOutputStream(outputStream);
+                System.out.println(dout);
+                dout.writeInt(choice);
+                switch (choice) {
+                    case 1:
+                        //completeForm();
+                        break;
+                    case 2:
+                        //addEMG();
+                        break;
+                    case 3:
+                        //addECG();
+                        break;
+                    case 4:
+                        //searchEMGByName();
+                        break;
+                    case 5:
+                        //searchECGByName();
+                        break;
+                    case 6:
+                        //String username = userManager.updateUsername(patientName);
+                        //patientManager.updateUsername(patientName, username);
+                        return;
+                    case 7:
+                        //userManager.updatePassword(patientName);
+                        return;
+                    case 8:
+                        return;
+                }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
     private static void releaseResources(OutputStream outputStream,InputStream console, Socket socket) {
         try {
             try {
