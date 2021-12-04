@@ -53,8 +53,7 @@ public class Main {
             Integer roleId = 1;
             
             response = name+","+age+","+weight+","+height+","+gender+","+username+","+password+","+roleId;
-            //response = "Amancio,88,100.0,150.55,Male,Amancio123,Amancio123,1";
-            System.out.println(response);
+            
             
             return response;
         }
@@ -254,10 +253,6 @@ public class Main {
         }
 
         return pswd;
-    }
-
-    public static String getPassword() {
-        return getPassword(8);
     }
 
 }

@@ -89,22 +89,7 @@ public class ClientSendCharactersViaNetwork2 {
                         return;
                 }
             }
-     /*   
-        while (true) {
-            //Read from our console
-            byteRead = console.read();
-             
-            //And send it to the server
-            dout = new DataOutputStream(outputStream);
-            System.out.println(dout);
-            dout.writeInt(byteRead);
-            if (byteRead == -1 || byteRead == 'x') {
-                System.out.println("Finish");
-                releaseResources(outputStream, console, socket);
-                System.exit(0);
-            }
-        }
-*/
+
         } catch (IOException ex) {
             Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
         }
