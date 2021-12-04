@@ -147,23 +147,23 @@ public class ClientSendCharactersViaNetwork2 {
                     case 3:
                         //searchECGByName();
                         break;
-                    case 5:
+                    case 4:
                         //searchEMGByName();
                         break;
-                    case 6:
+                    case 5:
                          String response_newUser = ui.Main.changeUsername();
                         dout.writeUTF(response_newUser);
                         //okay = dint.readUTF();
                         //System.out.println(okay);
                         break;
-                    case 7:
+                    case 6:
                         String response_newPassword = ui.Main.changePassword();
                         dout.writeUTF(response_newPassword);
                         //okay = dint.readUTF();
                         //System.out.println(okay);
                         //userManager.updatePassword(patientName);
                         break;
-                    case 8:
+                    case 7:
                         
                         return;
                 }
