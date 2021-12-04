@@ -99,6 +99,16 @@ public class Main {
         return response_form;
     }
 
+    public static String addEMG_addECG() throws Exception {
+        String response_EMG_ECG = "";
+        System.out.println("Please, enter the following information");
+        String month = getStringFromKeyboard("Month: ");
+        String day = getStringFromKeyboard("Day: ");
+        String position = getStringFromKeyboard("position (number of record of this day): ");
+        response_EMG_ECG = month + day + "_" + position ;
+        return response_EMG_ECG;
+        
+    }
     
     public static void searchEMGByName_patient(List<Emg> emgList) throws Exception{
         String month = getStringFromKeyboard("Introduce the month: ");
@@ -155,9 +165,10 @@ public class Main {
         String month = reader.readLine();
         System.out.println("Day: ");
         String day = reader.readLine();
-        System.out.println("position: ");
+        System.out.println("position (number of record of this day): ");
         String position = reader.readLine();
         String name = month + day + "_" + position ;
+        
         Integer patient_id = patientManager.searchByUsername(patientName);
 
         Emg emg = new Emg(name, patient_id);

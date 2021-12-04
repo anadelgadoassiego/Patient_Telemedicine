@@ -30,7 +30,7 @@ public class BitalinoDemo {
     public static List <Integer> arrayEMG = new ArrayList <Integer>();
     public static List <Integer> arrayECG = new ArrayList <Integer>();
     
-    public static void main(String[] args) {
+    public static void main(Socket socket) {
 
         BITalino bitalino = null;
         try {
@@ -83,11 +83,12 @@ public class BitalinoDemo {
                     arrayEMG.add(frame[i].analog[0]);
                     arrayECG.add(frame[i].analog[1]);
                     
-                    socket_bitalino();
+                    
 
                     
                 }
             }
+            socket_bitalino(socket);
                        
             
             //stop acquisition
@@ -112,8 +113,8 @@ public class BitalinoDemo {
 
     }
     
-    public static void socket_bitalino() throws IOException {
-        Socket socket = new Socket("178.96.56.1", 9000);
+    public static void socket_bitalino(Socket socket) throws IOException {
+        //Socket socket = new Socket("192.168.68.112", 9000);
         OutputStream outputStream = socket.getOutputStream();
         DataOutputStream dout;
         try {

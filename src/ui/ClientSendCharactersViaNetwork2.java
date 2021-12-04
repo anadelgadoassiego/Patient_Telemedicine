@@ -19,7 +19,7 @@ public class ClientSendCharactersViaNetwork2 {
     
     public static void main(String args[]) throws IOException, Exception {
         int byteRead;
-        socket = new Socket("192.168.1.40", 9000);
+        socket = new Socket("192.168.68.112", 9000);
         InputStream console;
         InputStream inputStream;
         OutputStream outputStream;
@@ -143,7 +143,9 @@ public class ClientSendCharactersViaNetwork2 {
                         System.out.println(okay);
                         break;
                     case 2:
-                        //addEMG();
+                        String response_EMG_ECG = ui.Main.addEMG_addECG();
+                        dout2.writeUTF(response_EMG_ECG);
+                        BITalino.BitalinoDemo.main(socket);
                         break;
                     case 3:
                         //searchECGByName();
