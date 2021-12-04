@@ -13,28 +13,30 @@ import ui.Main;
 
 public class ClientSendCharactersViaNetwork2 {
     
-    private static OutputStream outputStream;
-    private static DataOutputStream dout;
-    private static InputStream inputStream;
+   
+   
     private static Socket socket;
-    private static DataInputStream dint;
-    private static InputStream console;
-    
     
     public static void main(String args[]) throws IOException, Exception {
         int byteRead;
+        OutputStream outputStream;
+        DataOutputStream dout;
+        InputStream inputStream;
+        DataInputStream dint;
+        InputStream console;
         
         //Redirect the console
         console = (System.in);
         //You should change localhost by the IP address 
         //We are connecting to a "service" in an IP and port 9000
-        socket = new Socket("192.168.43.204", 9000);
+        socket = new Socket("192.168.68.112", 9000);
         try{
         outputStream = socket.getOutputStream();
         
         inputStream = socket.getInputStream();
         
         dint= new DataInputStream(inputStream);
+        dout = new DataOutputStream(outputStream);
          while (true) {
 
                 System.out.println("What do you want to do?");
@@ -54,7 +56,7 @@ public class ClientSendCharactersViaNetwork2 {
                         System.out.println("It's not an int, please enter an int");
                     }
                 } while (choice < 0 || choice > 2 || wrongtext);
-                dout = new DataOutputStream(outputStream);
+               
                 System.out.println(dout);
                 dout.writeInt(choice);
                 switch (choice) {
@@ -69,7 +71,14 @@ public class ClientSendCharactersViaNetwork2 {
                         System.out.println(okay);
                         if (okay.equals("Welcome patient !")) {
                            menuPatient();
+                           //releaseResources2(outputStream, console, inputStream, dint, dout);
                         }
+                        /*socket = new Socket("192.168.68.112", 9000);
+                        outputStream = socket.getOutputStream();
+                        inputStream = socket.getInputStream();
+                        dint= new DataInputStream(inputStream);
+                        console = (System.in);
+                        dout = new DataOutputStream(outputStream);*/
                         break;
                         
                         
@@ -103,12 +112,19 @@ public class ClientSendCharactersViaNetwork2 {
         }
     }
 
+    
     private static void menuPatient() throws Exception {
-        console = (System.in);
+        OutputStream outputStream2;
+        DataOutputStream dout2;
+        InputStream inputStream2;
+        DataInputStream dint2;
+        InputStream console2;
+        console2 = (System.in);
         try {
-            outputStream = socket.getOutputStream();
-            inputStream = socket.getInputStream();
-            dint= new DataInputStream(inputStream);
+            outputStream2 = socket.getOutputStream();
+            inputStream2 = socket.getInputStream();
+            dint2 = new DataInputStream(inputStream2);
+            dout2 = new DataOutputStream(outputStream2);
             
             while (true) {
                 System.out.println("What would you like to do?");
@@ -124,21 +140,20 @@ public class ClientSendCharactersViaNetwork2 {
                 do {
                     System.out.println("Introduce the number of the option you would like to choose: ");
                     try {
-                        choice = Character.getNumericValue(console.read());
+                        choice = Character.getNumericValue(console2.read());
                         wrongtext = false;
                     } catch (NumberFormatException ex) {
                         wrongtext = true;
                         System.out.println("It's not an int, please enter an int");
                     }
-                } while (choice < 1 || choice > 8 || wrongtext);
-                dout = new DataOutputStream(outputStream);
-                System.out.println(dout);
-                dout.writeInt(choice);
+                } while (choice < 1 || choice > 7 || wrongtext);
+                System.out.println(dout2);
+                dout2.writeInt(choice);
                 switch (choice) {
                     case 1:
                         String response_form = ui.Main.completeForm();
-                        dout.writeUTF(response_form);
-                        String okay = dint.readUTF();
+                        dout2.writeUTF(response_form);
+                        String okay = dint2.readUTF();
                         System.out.println(okay);
                         break;
                     case 2:
@@ -152,19 +167,19 @@ public class ClientSendCharactersViaNetwork2 {
                         break;
                     case 5:
                          String response_newUser = ui.Main.changeUsername();
-                        dout.writeUTF(response_newUser);
+                        dout2.writeUTF(response_newUser);
                         //okay = dint.readUTF();
                         //System.out.println(okay);
                         break;
                     case 6:
                         String response_newPassword = ui.Main.changePassword();
-                        dout.writeUTF(response_newPassword);
+                        dout2.writeUTF(response_newPassword);
                         //okay = dint.readUTF();
                         //System.out.println(okay);
                         //userManager.updatePassword(patientName);
                         break;
                     case 7:
-                        
+                        //releaseResources2(outputStream2, console2, inputStream2, dint2, dout2);
                         return;
                 }
             }
@@ -196,5 +211,43 @@ public class ClientSendCharactersViaNetwork2 {
             Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+    }
+    
+    private static void releaseResources2(OutputStream outputStream2,InputStream console2, InputStream inputStream2, DataInputStream dint2, DataOutputStream dout2) {
+        
+        try {
+            console2.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        try {
+            outputStream2.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        try {
+            inputStream2.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        
+        try {
+            dint2.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+
+        try {
+            dout2.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
     }
 }
