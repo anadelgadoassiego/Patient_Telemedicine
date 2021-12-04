@@ -28,7 +28,7 @@ public class ClientSendCharactersViaNetwork2 {
         console = (System.in);
         //You should change localhost by the IP address 
         //We are connecting to a "service" in an IP and port 9000
-        socket = new Socket("10.60.59.130", 9000);
+        socket = new Socket("192.168.43.204", 9000);
         try{
         outputStream = socket.getOutputStream();
         
@@ -69,7 +69,6 @@ public class ClientSendCharactersViaNetwork2 {
                         System.out.println(okay);
                         if (okay.equals("Welcome patient !")) {
                            menuPatient();
-
                         }
                         break;
                         
@@ -80,7 +79,7 @@ public class ClientSendCharactersViaNetwork2 {
                         System.exit(0);
                         return;
                     default:
-                        break;
+                        return;
                 }
             }
      /*   
@@ -114,13 +113,12 @@ public class ClientSendCharactersViaNetwork2 {
             while (true) {
                 System.out.println("What would you like to do?");
                 System.out.println("1. Complete form");
-                System.out.println("2. Add EMG");
-                System.out.println("3. Add ECG");
-                System.out.println("4. Search EMG by start date");
-                System.out.println("5. Search ECG by start date");
-                System.out.println("6. Change your user name");
-                System.out.println("7. Change your password");
-                System.out.println("8. Go back");
+                System.out.println("2. Add EMG and ECG");
+                System.out.println("3. Search EMG by start date");
+                System.out.println("4. Search ECG by start date");
+                System.out.println("5. Change your user name");
+                System.out.println("6. Change your password");
+                System.out.println("7. Go back");
                 Integer choice = new Integer(0);
                 boolean wrongtext = false;
                 do {
@@ -147,16 +145,13 @@ public class ClientSendCharactersViaNetwork2 {
                         //addEMG();
                         break;
                     case 3:
-                        //addECG();
-                        break;
-                    case 4:
-                        //searchEMGByName();
-                        break;
-                    case 5:
                         //searchECGByName();
                         break;
+                    case 5:
+                        //searchEMGByName();
+                        break;
                     case 6:
-                        String response_newUser = ui.Main.changeUsername();
+                         String response_newUser = ui.Main.changeUsername();
                         dout.writeUTF(response_newUser);
                         //okay = dint.readUTF();
                         //System.out.println(okay);
@@ -169,6 +164,7 @@ public class ClientSendCharactersViaNetwork2 {
                         //userManager.updatePassword(patientName);
                         break;
                     case 8:
+                        
                         return;
                 }
             }
