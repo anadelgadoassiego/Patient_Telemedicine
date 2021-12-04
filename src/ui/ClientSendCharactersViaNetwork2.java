@@ -19,24 +19,22 @@ public class ClientSendCharactersViaNetwork2 {
     
     public static void main(String args[]) throws IOException, Exception {
         int byteRead;
-        OutputStream outputStream;
-        DataOutputStream dout;
-        InputStream inputStream;
-        DataInputStream dint;
+        socket = new Socket("192.168.1.40", 9000);
         InputStream console;
+        InputStream inputStream;
+        OutputStream outputStream;
+        DataInputStream dint;
+        DataOutputStream dout;
+        
         
         //Redirect the console
-        console = (System.in);
-        //You should change localhost by the IP address 
-        //We are connecting to a "service" in an IP and port 9000
-        socket = new Socket("192.168.68.112", 9000);
+        
         try{
-        outputStream = socket.getOutputStream();
-        
-        inputStream = socket.getInputStream();
-        
-        dint= new DataInputStream(inputStream);
-        dout = new DataOutputStream(outputStream);
+            console = (System.in);
+            inputStream = socket.getInputStream();
+            outputStream = socket.getOutputStream();
+            dint= new DataInputStream(inputStream);
+            dout = new DataOutputStream(outputStream);
          while (true) {
 
                 System.out.println("What do you want to do?");
@@ -84,7 +82,7 @@ public class ClientSendCharactersViaNetwork2 {
                         
                     case 0:
                         System.out.println("Finish");
-                        releaseResources(outputStream, console, socket);
+                        releaseResources(outputStream,console, inputStream, console,dint,dout, socket);
                         System.exit(0);
                         return;
                     default:
@@ -114,15 +112,18 @@ public class ClientSendCharactersViaNetwork2 {
 
     
     private static void menuPatient() throws Exception {
-        OutputStream outputStream2;
-        DataOutputStream dout2;
-        InputStream inputStream2;
-        DataInputStream dint2;
+        
         InputStream console2;
-        console2 = (System.in);
+        InputStream inputStream2;
+        OutputStream outputStream2;
+        DataInputStream dint2;
+        DataOutputStream dout2;
+        
+       
         try {
-            outputStream2 = socket.getOutputStream();
+            console2 = (System.in);
             inputStream2 = socket.getInputStream();
+            outputStream2 = socket.getOutputStream();
             dint2 = new DataInputStream(inputStream2);
             dout2 = new DataOutputStream(outputStream2);
             
@@ -166,17 +167,16 @@ public class ClientSendCharactersViaNetwork2 {
                         //searchEMGByName();
                         break;
                     case 5:
-                         String response_newUser = ui.Main.changeUsername();
+                        String response_newUser = ui.Main.changeUsername();
                         dout2.writeUTF(response_newUser);
-                        //okay = dint.readUTF();
-                        //System.out.println(okay);
+                        okay = dint2.readUTF();
+                        System.out.println(okay);
                         break;
                     case 6:
                         String response_newPassword = ui.Main.changePassword();
                         dout2.writeUTF(response_newPassword);
-                        //okay = dint.readUTF();
-                        //System.out.println(okay);
-                        //userManager.updatePassword(patientName);
+                        okay = dint2.readUTF();
+                        System.out.println(okay);
                         break;
                     case 7:
                         //releaseResources2(outputStream2, console2, inputStream2, dint2, dout2);
@@ -189,17 +189,35 @@ public class ClientSendCharactersViaNetwork2 {
         
     }
     
-    private static void releaseResources(OutputStream outputStream,InputStream console, Socket socket) {
+    private static void releaseResources(OutputStream outputStream, InputStream console, InputStream inputStream, InputStream console2, DataInputStream dint, DataOutputStream dout, Socket socket) {
         try {
             try {
-                console.close();
+                dout.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+            try {
+                dint.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+            try {
+                outputStream.close();
             } catch (IOException ex) {
                 Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
 
             }
 
             try {
-                outputStream.close();
+                inputStream.close();
+            } catch (IOException ex) {
+                Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
+
+            }
+            try {
+                console.close();
             } catch (IOException ex) {
                 Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -214,23 +232,8 @@ public class ClientSendCharactersViaNetwork2 {
     }
     
     private static void releaseResources2(OutputStream outputStream2,InputStream console2, InputStream inputStream2, DataInputStream dint2, DataOutputStream dout2) {
-        
         try {
-            console2.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-
-        try {
-            outputStream2.close();
-        } catch (IOException ex) {
-            Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
-
-        }
-
-        try {
-            inputStream2.close();
+            dout2.close();
         } catch (IOException ex) {
             Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
 
@@ -242,12 +245,25 @@ public class ClientSendCharactersViaNetwork2 {
             Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
 
         }
-
         try {
-            dout2.close();
+            inputStream2.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+         try {
+            outputStream2.close();
+        } catch (IOException ex) {
+            Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
+
+        }
+        try {
+            console2.close();
         } catch (IOException ex) {
             Logger.getLogger(ClientSendCharactersViaNetwork2.class.getName()).log(Level.SEVERE, null, ex);
 
         }
     }
+
+    
 }
