@@ -4,12 +4,28 @@
  */
 package interfaces;
 
+import static interfaces.CreateLoginInterface.socket;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author gustavo
  */
 public class PatientMenuInterface extends javax.swing.JFrame {
-
+    public static String response = new String("");
+    private static InputStream inputStream2;
+    private static OutputStream outputStream2;
+    private static DataInputStream dint2;
+    private static DataOutputStream dout2;
+    public static Socket socket2 = CreateLoginInterface.socket;
     /**
      * Creates new form signUp
      */
@@ -56,8 +72,18 @@ public class PatientMenuInterface extends javax.swing.JFrame {
         jButton4.setText("Search ECG by date");
 
         jButton5.setText("Change Username");
+        jButton5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton5ActionPerformed(evt);
+            }
+        });
 
         jButton6.setText("Change Password");
+        jButton6.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton6ActionPerformed(evt);
+            }
+        });
 
         jButton7.setText("Go back");
         jButton7.addActionListener(new java.awt.event.ActionListener() {
@@ -116,47 +142,140 @@ public class PatientMenuInterface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void formActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_formActionPerformed
-        // TODO add your handling code here:
+        try {
+            // TODO add your handling code here:
+            
+            outputStream2 = socket2.getOutputStream();
+            dout2 = new DataOutputStream(outputStream2);
+            inputStream2 = socket2.getInputStream();                
+            dint2 = new DataInputStream(inputStream2);
+            int entero = 1;
+            dout2.writeInt(entero);
+            Formulary form = new Formulary(this,true);
+            form.setVisible(true);
+            dout2.writeUTF(response);
+            String okay = dint2.readUTF();
+            
+            if (okay == "Form saved successfully" ){
+                PatientMenuInterface p = new PatientMenuInterface();
+                JOptionPane.showMessageDialog(p, "Form saved successfully!");
+                
+            }
+            else {
+                PatientMenuInterface p = new PatientMenuInterface();
+                JOptionPane.showMessageDialog(p, "Form can't be saved!");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_formActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
         // TODO add your handling code here:
+        CreateLoginInterface c = new CreateLoginInterface();
+        this.setVisible(false);
+        c.setVisible(true);
     }//GEN-LAST:event_jButton7ActionPerformed
+
+    private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
+        try {
+            // TODO add your handling code here:
+            outputStream2 = socket2.getOutputStream();
+            dout2 = new DataOutputStream(outputStream2);
+            inputStream2 = socket2.getInputStream();
+            dint2 = new DataInputStream(inputStream2);
+            int entero = 5;
+            dout2.writeInt(entero);
+            String okay;
+            String username2 = JOptionPane.showInputDialog("Introduce your new Username");
+            dout2.writeUTF(username2);
+            okay = dint2.readUTF();
+            if (okay.equals("Action Completed")){
+                PatientMenuInterface p = new PatientMenuInterface();
+                JOptionPane.showMessageDialog(p, "Action completed!");
+            } else {
+                PatientMenuInterface p = new PatientMenuInterface();
+                JOptionPane.showMessageDialog(p, "Can not be completed!");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton5ActionPerformed
+
+    private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
+        try {
+            // TODO add your handling code here:
+            outputStream2 = socket2.getOutputStream();
+            dout2 = new DataOutputStream(outputStream2);
+            inputStream2 = socket2.getInputStream();
+            dint2 = new DataInputStream(inputStream2);
+            int entero = 6;
+            dout2.writeInt(entero);
+            String okay;
+            String password = JOptionPane.showInputDialog("Introduce your new Password");
+            dout2.writeUTF(password);
+            okay = dint2.readUTF();
+            if (okay.equals("Action Completed")){
+                PatientMenuInterface p = new PatientMenuInterface();
+                JOptionPane.showMessageDialog(p, "Action completed!");
+            } else {
+                PatientMenuInterface p = new PatientMenuInterface();
+                JOptionPane.showMessageDialog(p, "Can not be completed!");
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jButton6ActionPerformed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(PatientMenuInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(PatientMenuInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(PatientMenuInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(PatientMenuInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        }
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new PatientMenuInterface().setVisible(true);
+        
+
+            try {
+                /* Set the Nimbus look and feel */
+                //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+                /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+                * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+                */
+                try {
+                    for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                        if ("Nimbus".equals(info.getName())) {
+                            javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                            break;
+                        }
+                    }
+                } catch (ClassNotFoundException ex) {
+                    java.util.logging.Logger.getLogger(PatientMenuInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                } catch (InstantiationException ex) {
+                    java.util.logging.Logger.getLogger(PatientMenuInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                } catch (IllegalAccessException ex) {
+                    java.util.logging.Logger.getLogger(PatientMenuInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+                    java.util.logging.Logger.getLogger(PatientMenuInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+                }
+                //</editor-fold>
+                //</editor-fold>
+                
+                
+                outputStream2 = socket2.getOutputStream();
+                
+                inputStream2 = socket2.getInputStream();
+                
+                dint2 = new DataInputStream(inputStream2);
+                /* Create and display the form */
+                java.awt.EventQueue.invokeLater(new Runnable() {
+                    public void run() {
+                        new PatientMenuInterface().setVisible(true);
+                    }
+                });
+                
+            } catch (IOException ex) {
+                Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
             }
-        });
+        
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
