@@ -3,45 +3,31 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package interfaces;
-
-import db.interfaces.DBManager;
-import db.interfaces.DoctorManager;
-import db.interfaces.EcgManager;
-import db.interfaces.EmgManager;
-import db.interfaces.PatientManager;
-import db.interfaces.UserManager;
-import db.jpa.JPAUserManager;
-import db.sqlite.SQLiteManager;
-import java.io.BufferedReader;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.time.format.DateTimeFormatter;
-import java.util.List;
+import BITalino.BitalinoDemo;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import pojos.Doctor;
-import pojos.users.Role;
-import pojos.users.User;
-
+import pojos.Patient;
+import ui.Main;
+import static utils.InputOutput.getStringFromKeyboard;
 /**
  *
  * @author gustavo
  */
 public class CreateLoginInterface extends javax.swing.JFrame {
-    private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd"); // Each time dates are added
-    private static BufferedReader reader; // To read from the console
-    private static DBManager dbManager;
-    private static PatientManager patientManager;
-    private static DoctorManager doctorManager;
-    private static EmgManager emgManager;
-    private static EcgManager ecgManager;
-    private static UserManager userManager;
-    private static String doctorName = "";
-    private static String patientName = "";
-    public static String numbers = "0123456789";
-    public static String caps = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
-    public static String low_case = "abcdefghijklmnopqrstuvwxyz";
+    private static OutputStream outputStream;
+    private static DataOutputStream dout;
+    private static InputStream inputStream;
+    public static Socket socket;
+    private static DataInputStream dint;
+    private static InputStream console;
+    public static String response = new String("");
     /**
      * Creates new form CreateLoginInterface
      */
@@ -146,84 +132,72 @@ public class CreateLoginInterface extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void signupActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_signupActionPerformed
+        
+        
+       
         try {
-            String username = JOptionPane.showInputDialog("Introduce your Username");
-            String password = JOptionPane.showInputDialog("Introduce your Password");
-            List<Role> roles = userManager.getRoles();
-            // Create the password's hash
-            MessageDigest md = MessageDigest.getInstance("MD5");
-            md.update(password.getBytes());
-            byte[] hash = md.digest();
-            String seleccion=null;
-            do{
-                seleccion = JOptionPane.showInputDialog(
-                null,
-                "Choose your role between: patient or doctor",
-                JOptionPane.QUESTION_MESSAGE);  // el icono sera un iterrogante
-        
-                if (seleccion.equals("patient")){
-                    CreateLoginInterface c = new CreateLoginInterface();
-                    JOptionPane.showMessageDialog(c, "Only doctors can create patients");
-                }
-                
-            }while(!seleccion.equals("doctor"));
-            int roleId=2;
-            Role chosenRole = userManager.getRole(roleId);
-            // Create the user and store it
-            User user = new User(username, hash, chosenRole);
-
-            userManager.createUser(user);
-        
-            //String pharmacyName = username;
-            String fullname = JOptionPane.showInputDialog("Introduce your full name");
-           
-
-        
-            Doctor doctor = new Doctor(fullname,username);
-            doctorManager.add(doctor);
-            CreateLoginInterface c = new CreateLoginInterface();
-            JOptionPane.showMessageDialog(c, "Doctor created");
+            dout = new DataOutputStream(outputStream);
+            int entero = 1;
+            dout.writeInt(entero);
+            //AddPatient addpat = new AddPatient();
+            //addpat.setVisible(true);
+            AddPatient2 add = new AddPatient2(this,true);
+            add.setVisible(true);
+     
+            if (response.equals("")){
+                //no pasa
+            }
+            else{  
+                dout.writeUTF(response);
+                CreateLoginInterface c = new CreateLoginInterface();
+                JOptionPane.showMessageDialog(c, "Patient Created!");
             
-            
-        } catch (NoSuchAlgorithmException ex) {
+            }
+        } catch (IOException ex) {
             Logger.getLogger(CreateLoginInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+            
+            
+            
+                   
+          
         
     }//GEN-LAST:event_signupActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
-        try {
-            String username = JOptionPane.showInputDialog("Introduce your Username");
-            String password = JOptionPane.showInputDialog("Introduce your Password");
-            User user = userManager.checkPassword(username, password);
-        // We check if the user/password combination was OK
-        if (user == null) {
-            CreateLoginInterface c = new CreateLoginInterface();
-            JOptionPane.showMessageDialog(c, "Wrong credentials, try again");
-        } // We check the role
-        else if (user.getRole().getRole().equalsIgnoreCase("doctor")) {
-            CreateLoginInterface c = new CreateLoginInterface();
-            JOptionPane.showMessageDialog(c, "Welcome Dr "+username+"!");
-            doctorName = username;
-            DoctorMenuInterface doc = new DoctorMenuInterface();
-            doc.setVisible(true);
-            c.setVisible(false);
-        } else if (user.getRole().getRole().equalsIgnoreCase("patient")) {
-            CreateLoginInterface c = new CreateLoginInterface();
-            JOptionPane.showMessageDialog(c, "Welcome patient "+username+"!");
-            patientName = username;
-            PatientMenuInterface pat = new PatientMenuInterface();
-            pat.setVisible(true);
-            c.setVisible(false);
-        } else {
-            System.out.println("Invalid role");
-        }
-    }
-            
         
-        catch (NumberFormatException ex) {
-            JOptionPane.showMessageDialog(this, "Error", "ERROR", JOptionPane.ERROR_MESSAGE);
+        try {
+            System.out.println(socket);
+            dout = new DataOutputStream(outputStream);
+            int entero = 2;
+            dout.writeInt(entero);
+            String okay;
+            do {
+            String username2 = JOptionPane.showInputDialog("Introduce your Username");
+            String password2 = JOptionPane.showInputDialog("Introduce your Password");
+            response = username2+","+password2;
+            dout.writeUTF(response);
+            okay = dint.readUTF();
+            System.out.println(okay);
+            if (okay.equals("Wrong credentials, please try again!")) {
+                CreateLoginInterface c = new CreateLoginInterface();
+                JOptionPane.showMessageDialog(c, "Wrong credentials, please try again!");
+            }
+            }
+            while (okay.equals("Wrong credentials, please try again!"));
+            if (okay.equals("Welcome patient !")) {
+                CreateLoginInterface c = new CreateLoginInterface();
+                JOptionPane.showMessageDialog(c, "Welcome patient!");
+                
+                PatientMenuInterface pat = new PatientMenuInterface();
+                pat.setVisible(true);
+                this.setVisible(false);
+            }
+            
+            
+            
+                  } catch (IOException ex) {
+            Logger.getLogger(CreateLoginInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_loginActionPerformed
 
@@ -234,14 +208,9 @@ public class CreateLoginInterface extends javax.swing.JFrame {
 
     private void rolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rolesActionPerformed
         // TODO add your handling code here:
-        String roleName = "patient";
-        Role role = new Role(roleName);
-        userManager.createRole(role);
-        roleName = "doctor";
-        role = new Role(roleName);
-        userManager.createRole(role);
+        
         CreateLoginInterface c = new CreateLoginInterface();
-        JOptionPane.showMessageDialog(c, "Role created");
+        JOptionPane.showMessageDialog(c, response);
         
     }//GEN-LAST:event_rolesActionPerformed
 
@@ -249,43 +218,46 @@ public class CreateLoginInterface extends javax.swing.JFrame {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
+            /* Set the Nimbus look and feel */
+            //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+            /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+            * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
+            */
+            try {
+                for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+                    if ("Nimbus".equals(info.getName())) {
+                        javax.swing.UIManager.setLookAndFeel(info.getClassName());
+                        break;
+                    }
                 }
+            } catch (ClassNotFoundException ex) {
+                java.util.logging.Logger.getLogger(CreateLoginInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (InstantiationException ex) {
+                java.util.logging.Logger.getLogger(CreateLoginInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (IllegalAccessException ex) {
+                java.util.logging.Logger.getLogger(CreateLoginInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+                java.util.logging.Logger.getLogger(CreateLoginInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(CreateLoginInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(CreateLoginInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(CreateLoginInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(CreateLoginInterface.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+            //</editor-fold>
+            
+            socket = new Socket("192.168.1.128", 9000);
+            outputStream = socket.getOutputStream();
+        
+            inputStream = socket.getInputStream();
+        
+            dint= new DataInputStream(inputStream);
+            /* Create and display the form */
+            java.awt.EventQueue.invokeLater(new Runnable() {
+                public void run() {
+                    new CreateLoginInterface().setVisible(true);
+                }
+            });
+        } catch (IOException ex) {
+            Logger.getLogger(CreateLoginInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        dbManager = new SQLiteManager();
-        dbManager.connect();
-        patientManager = dbManager.getPatientManager();
-        doctorManager = dbManager.getDoctorManager();
-        emgManager = dbManager.getEmgManager();
-        ecgManager = dbManager.getEcgManager();
-        dbManager.createTables();
-        userManager = new JPAUserManager();
-        userManager.connect();
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new CreateLoginInterface().setVisible(true);
-            }
-        });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
