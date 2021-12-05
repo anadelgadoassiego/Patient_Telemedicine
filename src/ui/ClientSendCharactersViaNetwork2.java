@@ -5,10 +5,15 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pojos.Ecg;
+import pojos.Emg;
 import ui.Main;
 
 public class ClientSendCharactersViaNetwork2 {
@@ -19,7 +24,7 @@ public class ClientSendCharactersViaNetwork2 {
     
     public static void main(String args[]) throws IOException, Exception {
         int byteRead;
-        socket = new Socket("192.168.68.112", 9000);
+        socket = new Socket("192.168.1.40", 9000);
         InputStream console;
         InputStream inputStream;
         OutputStream outputStream;
@@ -54,8 +59,6 @@ public class ClientSendCharactersViaNetwork2 {
                         System.out.println("It's not an int, please enter an int");
                     }
                 } while (choice < 0 || choice > 2 || wrongtext);
-               
-                System.out.println(dout);
                 dout.writeInt(choice);
                 switch (choice) {
                     case 1:
@@ -103,6 +106,7 @@ public class ClientSendCharactersViaNetwork2 {
         OutputStream outputStream2;
         DataInputStream dint2;
         DataOutputStream dout2;
+        ObjectInputStream objectInputStream = null;
         
        
         try {
@@ -111,6 +115,7 @@ public class ClientSendCharactersViaNetwork2 {
             outputStream2 = socket.getOutputStream();
             dint2 = new DataInputStream(inputStream2);
             dout2 = new DataOutputStream(outputStream2);
+            objectInputStream = new ObjectInputStream(inputStream2);
             
             while (true) {
                 System.out.println("What would you like to do?");
@@ -133,7 +138,6 @@ public class ClientSendCharactersViaNetwork2 {
                         System.out.println("It's not an int, please enter an int");
                     }
                 } while (choice < 1 || choice > 7 || wrongtext);
-                System.out.println(dout2);
                 dout2.writeInt(choice);
                 switch (choice) {
                     case 1:
@@ -148,10 +152,23 @@ public class ClientSendCharactersViaNetwork2 {
                         BITalino.BitalinoDemo.main(socket);
                         break;
                     case 3:
-                        //searchECGByName();
+                        List<Emg> emgList = new ArrayList <Emg>();
+                        Object tmp;
+                        while ((tmp = objectInputStream.readObject()) != null) {
+                            Emg emg = (Emg) tmp;
+                            emgList.add(emg);
+                        }
+
+                        ui.Main.searchEMGByName_patient(emgList);
                         break;
                     case 4:
-                        //searchEMGByName();
+                        List<Ecg> ecgList = new ArrayList <Ecg>();
+                        Object tmp2;
+                        while ((tmp2 = objectInputStream.readObject()) != null) {
+                            Ecg ecg = (Ecg) tmp2;
+                            ecgList.add(ecg);
+                        }
+                        ui.Main.searchECGByName_patient(ecgList);
                         break;
                     case 5:
                         String response_newUser = ui.Main.changeUsername();

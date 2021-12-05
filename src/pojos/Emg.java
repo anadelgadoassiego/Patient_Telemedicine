@@ -15,6 +15,13 @@ public class Emg implements Serializable {
     private Integer patient_id;
     private byte[] patient_emg;
 
+    public Emg(Integer id, String name_emg, Integer patient_id, byte[] patient_emg) {
+        this.id = id;
+        this.name_emg = name_emg;
+        this.patient_id = patient_id;
+        this.patient_emg = patient_emg;
+    }
+
     public Emg(String name_emg, Integer patient_id) {
         this.name_emg = name_emg;
         this.patient_id = patient_id;
@@ -25,9 +32,6 @@ public class Emg implements Serializable {
         this.name_emg = name_emg;
         this.patient_id = patient_id;
     }
-
-    
-    
     
     
     public Integer getPatient_id() {
@@ -50,6 +54,12 @@ public class Emg implements Serializable {
         this.id = id;
         this.name_emg = name_emg;
         
+    }
+
+    public Emg(String name_emg, Integer patient_id, byte[] patient_emg) {
+        this.name_emg = name_emg;
+        this.patient_id = patient_id;
+        this.patient_emg = patient_emg;
     }
     
 
@@ -77,6 +87,7 @@ public class Emg implements Serializable {
         this.patient_emg = patient_emg;
     }
 
+    
     
     /*
     @Override
@@ -120,6 +131,7 @@ public class Emg implements Serializable {
     public String toString() {
         return "Emg{" + "id=" + id + ", name_emg=" + name_emg + ", patient_id=" + patient_id + '}';
     }
-  
+
+    
 
 }

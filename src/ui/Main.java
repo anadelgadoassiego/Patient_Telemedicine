@@ -17,7 +17,6 @@ import java.util.ArrayList;
 import java.util.List;
 import pojos.Ecg;
 import pojos.Emg;
-import pojos.Patient;
 import static utils.InputOutput.*;
 
 /**
@@ -111,9 +110,10 @@ public class Main {
     }
     
     public static void searchEMGByName_patient(List<Emg> emgList) throws Exception{
+        boolean found = false;
         String month = getStringFromKeyboard("Introduce the month: ");
         String day = getStringFromKeyboard("Introduce day: ");
-        String name_emg = day + month ;
+        String name_emg = month + day  ;
         String name_select;
         for (Emg emg  : emgList) {
              name_select = emg.getName_emg();
@@ -122,23 +122,48 @@ public class Main {
              }
         } 
         
-        System.out.println("Introduce the number of the emg");
-        int position = Integer.parseInt(reader.readLine());
-        name_emg = day + month + "_" + position ; 
+       
+        int position = Integer.parseInt(getStringFromKeyboard("Introduce the number of the emg"));
+        name_emg = "EMG_" + month +day + "_" + position + ".txt" ; 
         for (Emg emg : emgList){
             name_select = emg.getName_emg();
-             if (name_select == name_emg){
+             if (name_select.equals(name_emg)){
                 System.out.println(emg);
+                found= true;
+                byte [] emg_values = emg.getPatient_emg();
+                List <String> values = new ArrayList();
+                String pasar = "";
+                for(int i=0;i<(emg_values.length)-1;i++){
+                   char value = (char) emg_values[i];
+                   int compare = (int) emg_values[i];
+                   while(compare!=10){
+                       value = (char) emg_values[i];
+                       compare = (int) emg_values[i];
+                       if(compare!=10){
+                            pasar = pasar+value;
+                            i++;
+                       }
+                       
+                   }
+                   values.add(pasar);
+                   pasar="";
+                   
+               }
+                 System.out.println(values.toString());
              }
+        }
+        if(!found){
+            System.out.println("It does not exisist...");
         }
         
     }
     
         
     public static void searchECGByName_patient(List<Ecg> ecgList) throws Exception{
+        boolean found = false;
         String month = getStringFromKeyboard("Introduce the month: ");
         String day = getStringFromKeyboard("Introduce day: ");
-        String name_ecg = day + month ;
+        String name_ecg = month + day ;
         String name_select;
         for (Ecg ecg  : ecgList) {
              name_select = ecg.getName_ecg();
@@ -147,51 +172,43 @@ public class Main {
              }
         } 
         
-        System.out.println("Introduce the number of the emg");
-        int position = Integer.parseInt(reader.readLine());
-        name_ecg = day + month + "_" + position ; 
+        int position = Integer.parseInt(getStringFromKeyboard("Introduce the number of the ecg: "));
+        name_ecg = "ECG_" + month + day + "_" + position + ".txt"; 
         for (Ecg ecg : ecgList){
             name_select = ecg.getName_ecg();
-             if (name_select == name_ecg){
+             if (name_select.equals(name_ecg)){
                 System.out.println(ecg);
+                found= true;
+                byte [] ecg_values = ecg.getPatient_ecg();
+                List <String> values = new ArrayList();
+                String pasar = "";
+                
+                for(int i=0;i<(ecg_values.length)-1;i++){
+                   char value = (char) ecg_values[i];
+                   int compare = (int) ecg_values[i];
+                   while(compare!=10){
+                       value = (char) ecg_values[i];
+                       compare = (int) ecg_values[i];
+                       if(compare!=10){
+                            pasar = pasar+value;
+                            i++;
+                       }
+                       
+                   }
+                   values.add(pasar);
+                   pasar="";
+                   
+               }
+                 System.out.println(values.toString());
              }
+        }
+        if(!found){
+            System.out.println("It does not exisist...");
         }
         
     }
-    
-    private static void addEMG() throws Exception {
-        System.out.println("Please, enter the following information");
-        System.out.println("Month: ");
-        String month = reader.readLine();
-        System.out.println("Day: ");
-        String day = reader.readLine();
-        System.out.println("position (number of record of this day): ");
-        String position = reader.readLine();
-        String name = month + day + "_" + position ;
-        
-        Integer patient_id = patientManager.searchByUsername(patientName);
 
-        Emg emg = new Emg(name, patient_id);
-        emgManager.add(emg);
-    }
 
-    private static void addECG() throws Exception {
-        System.out.println("Please, enter the following information");
-        System.out.println("Month: ");
-        String month = reader.readLine();
-        System.out.println("Day: ");
-        String day = reader.readLine();
-        System.out.println("position: ");
-        String position = reader.readLine();
-        String name = month + day + "_" + position ;
-        Integer patient_id = patientManager.searchByUsername(patientName);
-
-        Ecg ecg = new Ecg(name, patient_id);
-
-        ecgManager.add(ecg);
-    }
-
- 
     public static String changeUsername() {
         String newName = getStringFromKeyboard("Introduce your new username: ");
         return newName;
@@ -199,71 +216,6 @@ public class Main {
     public static String changePassword() {
         String newPassword = getStringFromKeyboard("Introduce your new password: ");
         return newPassword;
-    }
-    
-    private static void addPatient() throws Exception {
-        System.out.println("Please, enter the following information: ");
-        System.out.println("Name: ");
-        String name = reader.readLine();
-        System.out.println("Age: ");
-        Integer age = Integer.parseInt(reader.readLine());
-        System.out.println("Weight: ");
-        Float weight = Float.parseFloat(reader.readLine());
-        System.out.println("Height: ");
-        Float height = Float.parseFloat(reader.readLine());
-        System.out.println("Gender: ");
-        String gender = reader.readLine();
-
-        Patient patient = new Patient(name, age, weight, height, gender);
-
-        String username = "";
-        boolean distinctUser = false;
-        do {
-            System.out.println("Introduce a username for the patient: ");
-            username = reader.readLine();
-            List<String> existUsernames = new ArrayList<String>();
-            existUsernames = patientManager.getUsernames();
-            if (existUsernames.contains(username)) {
-                distinctUser = true;
-            } else {
-                distinctUser = false;
-            }
-        } while (distinctUser);
-
-        String UserName = username;
-        System.out.print("Password: ");
-        String password = getPassword();
-      
-        // Create the password's hash
-        MessageDigest md = MessageDigest.getInstance("MD5");
-        md.update(password.getBytes());
-        byte[] hash = md.digest();
-        int roleId = 1;
-        // Get the chosen role from the database
-        Role chosenRole = userManager.getRole(roleId);
-        // Create the user and store it
-        User user = new User(UserName, hash, chosenRole);
-        userManager.createUser(user);
-        patient.setNameuser(UserName);
-        patientManager.add(patient);
-        int patientId=dbManager.getLastId();
-        System.out.println(patientId);
-        int doctorId = doctorManager.getId(doctorName);
-        System.out.println(doctorId);
-        doctorManager.asign(doctorId, patientId);
-
-        
-        
-    }
-
-    public static String getPassword(String key, int length) {
-        String pswd = "";
-
-        for (int i = 0; i < length; i++) {
-            pswd += (key.charAt((int) (Math.random() * key.length())));
-        }
-
-        return pswd;
     }
 
 }
