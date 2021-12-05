@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import pojos.Doctor;
 import pojos.Ecg;
 import pojos.Emg;
 import ui.Main;
@@ -24,6 +25,7 @@ public class ClientSendCharactersViaNetwork2 {
     
     public static void main(String args[]) throws IOException, Exception {
         int byteRead;
+
         socket = new Socket("192.168.1.131", 9000);
         InputStream console;
         InputStream inputStream;
@@ -125,7 +127,8 @@ public class ClientSendCharactersViaNetwork2 {
                 System.out.println("4. Search ECG by start date");
                 System.out.println("5. Change your user name");
                 System.out.println("6. Change your password");
-                System.out.println("7. Go back");
+                System.out.println("7. Choose one doctor");
+                System.out.println("8. Go back");
                 Integer choice = new Integer(0);
                 boolean wrongtext = false;
                 do {
@@ -137,7 +140,7 @@ public class ClientSendCharactersViaNetwork2 {
                         wrongtext = true;
                         System.out.println("It's not an int, please enter an int");
                     }
-                } while (choice < 1 || choice > 7 || wrongtext);
+                } while (choice < 1 || choice > 8 || wrongtext);
                 dout2.writeInt(choice);
                 switch (choice) {
                     case 1:
@@ -183,6 +186,16 @@ public class ClientSendCharactersViaNetwork2 {
                         System.out.println(okay);
                         break;
                     case 7:
+                        List<Doctor> doctorList = new ArrayList <Doctor>();
+                        Object tmp3;
+                        while ((tmp3 = objectInputStream.readObject()) != null) {
+                            Doctor doctor = (Doctor) tmp3;
+                            doctorList.add(doctor);
+                        }
+                        int id_doctor = ui.Main.chooseDoctor(doctorList);
+                        dout2.writeInt(id_doctor);
+                        break;
+                    case 8:
                         //releaseResources2(outputStream2, console2, inputStream2, dint2, dout2);
                         return;
                 }
