@@ -14,6 +14,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import static utils.InputOutput.getStringFromKeyboard;
 
 /**
  *
@@ -44,8 +45,8 @@ public class PatientMenuInterface extends javax.swing.JFrame {
 
         jLabel1 = new javax.swing.JLabel();
         form = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        addEmg = new javax.swing.JButton();
+        addEcg = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
@@ -63,9 +64,14 @@ public class PatientMenuInterface extends javax.swing.JFrame {
             }
         });
 
-        jButton1.setText("Add EMG");
+        addEmg.setText("Add EMG");
+        addEmg.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEmgActionPerformed(evt);
+            }
+        });
 
-        jButton2.setText("Add ECG");
+        addEcg.setText("Add ECG");
 
         jButton3.setText("Search EMG by date");
 
@@ -104,9 +110,9 @@ public class PatientMenuInterface extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(46, 46, 46)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jButton1)
+                            .addComponent(addEmg)
                             .addComponent(form)
-                            .addComponent(jButton2)
+                            .addComponent(addEcg)
                             .addComponent(jButton3)
                             .addComponent(jButton4)
                             .addComponent(jButton5)
@@ -122,9 +128,9 @@ public class PatientMenuInterface extends javax.swing.JFrame {
                 .addGap(37, 37, 37)
                 .addComponent(form)
                 .addGap(18, 18, 18)
-                .addComponent(jButton1)
+                .addComponent(addEmg)
                 .addGap(18, 18, 18)
-                .addComponent(jButton2)
+                .addComponent(addEcg)
                 .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
@@ -227,6 +233,30 @@ public class PatientMenuInterface extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jButton6ActionPerformed
 
+    private void addEmgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmgActionPerformed
+        try {
+            // TODO add your handling code here:
+            outputStream2 = socket2.getOutputStream();
+            dout2 = new DataOutputStream(outputStream2);
+            inputStream2 = socket2.getInputStream();
+            dint2 = new DataInputStream(inputStream2);
+            int entero = 2;
+            dout2.writeInt(entero);
+            addEmg addemg = new addEmg(this,true);
+            addemg.setVisible(true);
+            dout2.writeUTF(response);
+            BITalino.BitalinoDemo.main(socket);
+            
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        
+        
+    }//GEN-LAST:event_addEmgActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -279,9 +309,9 @@ public class PatientMenuInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton addEcg;
+    private javax.swing.JButton addEmg;
     private javax.swing.JButton form;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;

@@ -13,7 +13,7 @@ import java.net.Socket;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
-import pojos.Patient;
+
 import ui.Main;
 import static utils.InputOutput.getStringFromKeyboard;
 /**
@@ -50,7 +50,6 @@ public class CreateLoginInterface extends javax.swing.JFrame {
         signup = new javax.swing.JButton();
         jLabel2 = new javax.swing.JLabel();
         jButton3 = new javax.swing.JButton();
-        roles = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -77,13 +76,6 @@ public class CreateLoginInterface extends javax.swing.JFrame {
             }
         });
 
-        roles.setText("Create Roles");
-        roles.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rolesActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -104,9 +96,7 @@ public class CreateLoginInterface extends javax.swing.JFrame {
                         .addComponent(jLabel2)))
                 .addContainerGap(112, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGap(23, 23, 23)
-                .addComponent(roles)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(23, 295, Short.MAX_VALUE)
                 .addComponent(jButton3)
                 .addGap(26, 26, 26))
         );
@@ -122,9 +112,7 @@ public class CreateLoginInterface extends javax.swing.JFrame {
                     .addComponent(login)
                     .addComponent(signup))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton3)
-                    .addComponent(roles))
+                .addComponent(jButton3)
                 .addGap(14, 14, 14))
         );
 
@@ -206,14 +194,6 @@ public class CreateLoginInterface extends javax.swing.JFrame {
         System.exit(0);
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    private void rolesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rolesActionPerformed
-        // TODO add your handling code here:
-        
-        CreateLoginInterface c = new CreateLoginInterface();
-        JOptionPane.showMessageDialog(c, response);
-        
-    }//GEN-LAST:event_rolesActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -243,7 +223,7 @@ public class CreateLoginInterface extends javax.swing.JFrame {
             }
             //</editor-fold>
             
-            socket = new Socket("192.168.1.128", 9000);
+            socket = new Socket("192.168.1.131", 9000);
             outputStream = socket.getOutputStream();
         
             inputStream = socket.getInputStream();
@@ -266,7 +246,6 @@ public class CreateLoginInterface extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollBar jScrollBar1;
     private javax.swing.JButton login;
-    private javax.swing.JButton roles;
     private javax.swing.JButton signup;
     // End of variables declaration//GEN-END:variables
 }
