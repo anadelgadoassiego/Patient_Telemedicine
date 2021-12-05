@@ -147,9 +147,10 @@ public class CreateLoginInterface extends javax.swing.JFrame {
             
             
             
-                   
-          
-        
+    CreateLoginInterface c = new CreateLoginInterface();
+           
+    c.setVisible(true);  
+    this.setVisible(false);
     }//GEN-LAST:event_signupActionPerformed
 
     private void loginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_loginActionPerformed
@@ -160,7 +161,7 @@ public class CreateLoginInterface extends javax.swing.JFrame {
             int entero = 2;
             dout.writeInt(entero);
             String okay;
-            do {
+            
             String username2 = JOptionPane.showInputDialog("Introduce your Username");
             String password2 = JOptionPane.showInputDialog("Introduce your Password");
             response = username2+","+password2;
@@ -170,9 +171,12 @@ public class CreateLoginInterface extends javax.swing.JFrame {
             if (okay.equals("Wrong credentials, please try again!")) {
                 CreateLoginInterface c = new CreateLoginInterface();
                 JOptionPane.showMessageDialog(c, "Wrong credentials, please try again!");
+                this.setVisible(false);
+           
+                
             }
-            }
-            while (okay.equals("Wrong credentials, please try again!"));
+            
+            
             if (okay.equals("Welcome patient !")) {
                 CreateLoginInterface c = new CreateLoginInterface();
                 JOptionPane.showMessageDialog(c, "Welcome patient!");
@@ -180,6 +184,10 @@ public class CreateLoginInterface extends javax.swing.JFrame {
                 PatientMenuInterface pat = new PatientMenuInterface();
                 pat.setVisible(true);
                 this.setVisible(false);
+            } else{
+                CreateLoginInterface c = new CreateLoginInterface();
+           
+                c.setVisible(true);
             }
             
             
@@ -187,6 +195,7 @@ public class CreateLoginInterface extends javax.swing.JFrame {
                   } catch (IOException ex) {
             Logger.getLogger(CreateLoginInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
+         
     }//GEN-LAST:event_loginActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed

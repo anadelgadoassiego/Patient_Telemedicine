@@ -9,11 +9,17 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.ObjectInputStream;
 import java.io.OutputStream;
+import static java.lang.Integer.parseInt;
 import java.net.Socket;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import pojos.Ecg;
+import pojos.Emg;
 import static utils.InputOutput.getStringFromKeyboard;
 
 /**
@@ -27,6 +33,7 @@ public class PatientMenuInterface extends javax.swing.JFrame {
     private static DataInputStream dint2;
     private static DataOutputStream dout2;
     public static Socket socket2 = CreateLoginInterface.socket;
+    ObjectInputStream objectInputStream = null;
     /**
      * Creates new form signUp
      */
@@ -46,9 +53,8 @@ public class PatientMenuInterface extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         form = new javax.swing.JButton();
         addEmg = new javax.swing.JButton();
-        addEcg = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton4 = new javax.swing.JButton();
+        ecgname = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
@@ -64,18 +70,26 @@ public class PatientMenuInterface extends javax.swing.JFrame {
             }
         });
 
-        addEmg.setText("Add EMG");
+        addEmg.setText("Add EMG or ECG");
         addEmg.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addEmgActionPerformed(evt);
             }
         });
 
-        addEcg.setText("Add ECG");
-
         jButton3.setText("Search EMG by date");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
 
-        jButton4.setText("Search ECG by date");
+        ecgname.setText("Search ECG by date");
+        ecgname.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ecgnameActionPerformed(evt);
+            }
+        });
 
         jButton5.setText("Change Username");
         jButton5.addActionListener(new java.awt.event.ActionListener() {
@@ -112,12 +126,11 @@ public class PatientMenuInterface extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(addEmg)
                             .addComponent(form)
-                            .addComponent(addEcg)
-                            .addComponent(jButton3)
-                            .addComponent(jButton4)
                             .addComponent(jButton5)
                             .addComponent(jButton6)
-                            .addComponent(jButton7))))
+                            .addComponent(jButton7)
+                            .addComponent(jButton3)
+                            .addComponent(ecgname))))
                 .addContainerGap(168, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -130,18 +143,16 @@ public class PatientMenuInterface extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(addEmg)
                 .addGap(18, 18, 18)
-                .addComponent(addEcg)
-                .addGap(18, 18, 18)
                 .addComponent(jButton3)
                 .addGap(18, 18, 18)
-                .addComponent(jButton4)
+                .addComponent(ecgname)
                 .addGap(18, 18, 18)
                 .addComponent(jButton5)
                 .addGap(18, 18, 18)
                 .addComponent(jButton6)
                 .addGap(18, 18, 18)
                 .addComponent(jButton7)
-                .addContainerGap(40, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         pack();
@@ -162,18 +173,17 @@ public class PatientMenuInterface extends javax.swing.JFrame {
             dout2.writeUTF(response);
             String okay = dint2.readUTF();
             
-            if (okay == "Form saved successfully" ){
-                PatientMenuInterface p = new PatientMenuInterface();
-                JOptionPane.showMessageDialog(p, "Form saved successfully!");
-                
-            }
-            else {
-                PatientMenuInterface p = new PatientMenuInterface();
-                JOptionPane.showMessageDialog(p, "Form can't be saved!");
-            }
+            
+            PatientMenuInterface p = new PatientMenuInterface();
+            JOptionPane.showMessageDialog(p, "Form saved successfully!");
+            p.setVisible(true);
+            this.setVisible(false);
+            
+           
         } catch (IOException ex) {
             Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
+        
     }//GEN-LAST:event_formActionPerformed
 
     private void jButton7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton7ActionPerformed
@@ -206,6 +216,9 @@ public class PatientMenuInterface extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
+        PatientMenuInterface p = new PatientMenuInterface();
+        p.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     private void jButton6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton6ActionPerformed
@@ -231,6 +244,9 @@ public class PatientMenuInterface extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
+        PatientMenuInterface p = new PatientMenuInterface();
+        p.setVisible(true);
+        this.setVisible(false);
     }//GEN-LAST:event_jButton6ActionPerformed
 
     private void addEmgActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmgActionPerformed
@@ -252,10 +268,171 @@ public class PatientMenuInterface extends javax.swing.JFrame {
         } catch (IOException ex) {
             Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        
-        
+        PatientMenuInterface p = new PatientMenuInterface();
+        p.setVisible(true);
+        this.setVisible(false); 
     }//GEN-LAST:event_addEmgActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        try {        
+            // TODO add your handling code here:
+            
+            // TODO add your handling code here:
+            outputStream2 = socket2.getOutputStream();
+            dout2 = new DataOutputStream(outputStream2);
+            inputStream2 = socket2.getInputStream();
+            dint2 = new DataInputStream(inputStream2);
+            int entero = 3;
+            dout2.writeInt(entero);
+            objectInputStream = new ObjectInputStream(inputStream2);
+            List<Emg> emgList = new ArrayList <Emg>();
+            Object tmp;
+            while ((tmp = objectInputStream.readObject()) != null) {
+                Emg emg = (Emg) tmp;
+                emgList.add(emg);
+                
+                
+                
+            boolean found = false;
+            String month = JOptionPane.showInputDialog("Introduce the month");
+            String day = JOptionPane.showInputDialog("Introduce the day");
+            String name_emg = month + day  ;
+            String name_select;
+            for (Emg emg2  : emgList) {
+                 name_select = emg2.getName_emg();
+                 if (name_select.contains(name_emg)){
+                    PatientMenuInterface p = new PatientMenuInterface();
+                    JOptionPane.showMessageDialog(p, name_select);
+                 }
+            } 
+        
+       
+            String position2 = JOptionPane.showInputDialog("Introduce the position");
+            int position = parseInt(position2);
+            name_emg = "EMG_" + month +day + "_" + position + ".txt" ; 
+            for (Emg emg2 : emgList){
+                name_select = emg2.getName_emg();
+                 if (name_select.equals(name_emg)){
+                    System.out.println(emg2);
+                    found= true;
+                    byte [] emg_values = emg2.getPatient_emg();
+                    List <String> values = new ArrayList();
+                    String pasar = "";
+                    for(int i=0;i<(emg_values.length)-1;i++){
+                       char value = (char) emg_values[i];
+                       int compare = (int) emg_values[i];
+                       while(compare!=10){
+                           value = (char) emg_values[i];
+                           compare = (int) emg_values[i];
+                           if(compare!=10){
+                                pasar = pasar+value;
+                                i++;
+                           }
+
+                       }
+                       values.add(pasar);
+                       pasar="";
+
+                   }
+                    PatientMenuInterface p = new PatientMenuInterface();
+                    JOptionPane.showMessageDialog(p, values.toString());
+                 }
+            }
+            if(!found){
+                PatientMenuInterface p = new PatientMenuInterface();
+                JOptionPane.showMessageDialog(p, "Does not exist!");
+            }
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        PatientMenuInterface p = new PatientMenuInterface();
+        p.setVisible(true);
+        this.setVisible(false);
+            
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void ecgnameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ecgnameActionPerformed
+        // TODO add your handling code here:
+        try {        
+            // TODO add your handling code here:
+            
+            // TODO add your handling code here:
+            outputStream2 = socket2.getOutputStream();
+            dout2 = new DataOutputStream(outputStream2);
+            inputStream2 = socket2.getInputStream();
+            dint2 = new DataInputStream(inputStream2);
+            int entero = 4;
+            dout2.writeInt(entero);
+            objectInputStream = new ObjectInputStream(inputStream2);
+            List<Ecg> ecgList = new ArrayList <Ecg>();
+            Object tmp; 
+            while ((tmp = objectInputStream.readObject()) != null) {
+                            Ecg ecg = (Ecg) tmp;
+                            ecgList.add(ecg);
+                        
+            }
+            boolean found = false;
+            String month = JOptionPane.showInputDialog("Introduce the month");
+            String day = JOptionPane.showInputDialog("Introduce the day");
+            String name_ecg = month + day ;
+            String name_select;
+            for (Ecg ecg  : ecgList) {
+                 name_select = ecg.getName_ecg();
+                 if (name_select.contains(name_ecg)){
+                    PatientMenuInterface p = new PatientMenuInterface();
+                    JOptionPane.showMessageDialog(p, name_select);
+                 }
+            } 
+
+            String position2 = JOptionPane.showInputDialog("Introduce the position");
+            int position = parseInt(position2);
+            name_ecg = "ECG_" + month + day + "_" + position + ".txt"; 
+            for (Ecg ecg : ecgList){
+                name_select = ecg.getName_ecg();
+                 if (name_select.equals(name_ecg)){
+                    System.out.println(ecg);
+                    found= true;
+                    byte [] ecg_values = ecg.getPatient_ecg();
+                    List <String> values = new ArrayList();
+                    String pasar = "";
+
+                    for(int i=0;i<(ecg_values.length)-1;i++){
+                       char value = (char) ecg_values[i];
+                       int compare = (int) ecg_values[i];
+                       while(compare!=10){
+                           value = (char) ecg_values[i];
+                           compare = (int) ecg_values[i];
+                           if(compare!=10){
+                                pasar = pasar+value;
+                                i++;
+                           }
+
+                       }
+                       values.add(pasar);
+                       pasar="";
+
+                   }
+                    PatientMenuInterface p = new PatientMenuInterface();
+                    JOptionPane.showMessageDialog(p, values.toString());
+                 }
+            }
+            if(!found){
+                PatientMenuInterface p = new PatientMenuInterface();
+                JOptionPane.showMessageDialog(p, "Does not exist!");
+            }
+            
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        PatientMenuInterface p = new PatientMenuInterface();
+        p.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_ecgnameActionPerformed
 
     /**
      * @param args the command line arguments
@@ -309,11 +486,10 @@ public class PatientMenuInterface extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addEcg;
     private javax.swing.JButton addEmg;
+    private javax.swing.JButton ecgname;
     private javax.swing.JButton form;
     private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
     private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
