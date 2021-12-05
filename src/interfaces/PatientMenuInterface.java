@@ -18,6 +18,7 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import pojos.Doctor;
 import pojos.Ecg;
 import pojos.Emg;
 import static utils.InputOutput.getStringFromKeyboard;
@@ -33,7 +34,9 @@ public class PatientMenuInterface extends javax.swing.JFrame {
     private static DataInputStream dint2;
     private static DataOutputStream dout2;
     public static Socket socket2 = CreateLoginInterface.socket;
-    ObjectInputStream objectInputStream = null;
+    public static ObjectInputStream objectInputStream = null;
+    public static List<Doctor> doctorList = new ArrayList <Doctor>();
+    public static int id = 0;
     /**
      * Creates new form signUp
      */
@@ -58,6 +61,7 @@ public class PatientMenuInterface extends javax.swing.JFrame {
         jButton5 = new javax.swing.JButton();
         jButton6 = new javax.swing.JButton();
         jButton7 = new javax.swing.JButton();
+        doc = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -112,6 +116,13 @@ public class PatientMenuInterface extends javax.swing.JFrame {
             }
         });
 
+        doc.setText("Choose your doctor");
+        doc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                docActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -130,7 +141,8 @@ public class PatientMenuInterface extends javax.swing.JFrame {
                             .addComponent(jButton6)
                             .addComponent(jButton7)
                             .addComponent(jButton3)
-                            .addComponent(ecgname))))
+                            .addComponent(ecgname)
+                            .addComponent(doc))))
                 .addContainerGap(168, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -151,8 +163,10 @@ public class PatientMenuInterface extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(jButton6)
                 .addGap(18, 18, 18)
+                .addComponent(doc)
+                .addGap(18, 18, 18)
                 .addComponent(jButton7)
-                .addContainerGap(87, Short.MAX_VALUE))
+                .addContainerGap(40, Short.MAX_VALUE))
         );
 
         pack();
@@ -434,6 +448,53 @@ public class PatientMenuInterface extends javax.swing.JFrame {
         this.setVisible(false);
     }//GEN-LAST:event_ecgnameActionPerformed
 
+    private void docActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_docActionPerformed
+        try {
+            // TODO add your handling code here:
+            outputStream2 = socket2.getOutputStream();
+            dout2 = new DataOutputStream(outputStream2);
+            inputStream2 = socket2.getInputStream();
+            dint2 = new DataInputStream(inputStream2);
+            int entero = 7;
+            dout2.writeInt(entero);
+            objectInputStream = new ObjectInputStream(inputStream2);
+            
+            Object tmp3;
+            while ((tmp3 = objectInputStream.readObject()) != null) {
+                Doctor doctor = (Doctor) tmp3;
+                doctorList.add(doctor);
+            }
+            
+        
+            PatientMenuInterface p = new PatientMenuInterface();
+            JOptionPane.showMessageDialog(p, "Press OK to see the doctor's list");
+            for (Doctor doctor : doctorList) {
+                JOptionPane.showMessageDialog(p, doctor.toString());    
+            }
+            
+            ChooseDoc cdoc = new ChooseDoc(this,true);
+            cdoc.setVisible(true);
+            
+            dout2.writeInt(id);
+            
+            
+            JOptionPane.showMessageDialog(p, "Changes Applied!");
+            
+            
+
+            
+            
+            
+        } catch (IOException ex) {
+            Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        PatientMenuInterface p = new PatientMenuInterface();
+        p.setVisible(true);
+        this.setVisible(false);
+    }//GEN-LAST:event_docActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -487,6 +548,7 @@ public class PatientMenuInterface extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addEmg;
+    private javax.swing.JButton doc;
     private javax.swing.JButton ecgname;
     private javax.swing.JButton form;
     private javax.swing.JButton jButton3;
