@@ -127,6 +127,8 @@ public class CreateLoginInterface extends javax.swing.JFrame {
             dout = new DataOutputStream(outputStream);
             int entero = 1;
             dout.writeInt(entero);
+            int roleId = 1;
+            dout.writeInt(roleId);
             //AddPatient addpat = new AddPatient();
             //addpat.setVisible(true);
             AddPatient2 add = new AddPatient2(this,true);
