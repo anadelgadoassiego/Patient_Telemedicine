@@ -64,6 +64,8 @@ public class ClientSendCharactersViaNetwork2 {
                 dout.writeInt(choice);
                 switch (choice) {
                     case 1:
+                        int roleId = 1;
+                        dout.writeInt(roleId);
                         String response = ui.Main.newUser();
                         dout.writeUTF(response);
                         break;
