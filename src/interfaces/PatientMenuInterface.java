@@ -185,18 +185,21 @@ public class PatientMenuInterface extends javax.swing.JFrame {
             Formulary form = new Formulary(this,true);
             form.setVisible(true);
             dout2.writeUTF(response);
-            String okay = dint2.readUTF();
+            // String okay = dint2.readUTF();
+            System.out.println(response);
             
             
-            PatientMenuInterface p = new PatientMenuInterface();
-            JOptionPane.showMessageDialog(p, "Form saved successfully!");
-            p.setVisible(true);
-            this.setVisible(false);
+            
+            
             
            
         } catch (IOException ex) {
             Logger.getLogger(PatientMenuInterface.class.getName()).log(Level.SEVERE, null, ex);
         }
+        PatientMenuInterface p = new PatientMenuInterface();
+        JOptionPane.showMessageDialog(p, "Form saved successfully!");
+        p.setVisible(true);
+        this.setVisible(false);
         
     }//GEN-LAST:event_formActionPerformed
 
