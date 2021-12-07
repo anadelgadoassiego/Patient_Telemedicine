@@ -67,7 +67,7 @@ public class PatientMenuInterface extends javax.swing.JFrame {
 
         jLabel1.setText("Welcome!");
 
-        form.setText("Complete Formulary");
+        form.setText("Complete Clinical Trial");
         form.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 formActionPerformed(evt);
@@ -143,7 +143,7 @@ public class PatientMenuInterface extends javax.swing.JFrame {
                             .addComponent(jButton3)
                             .addComponent(ecgname)
                             .addComponent(doc))))
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(152, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -275,6 +275,10 @@ public class PatientMenuInterface extends javax.swing.JFrame {
             dint2 = new DataInputStream(inputStream2);
             int entero = 2;
             dout2.writeInt(entero);
+            FormularyEXG exg = new FormularyEXG(this,true);
+            exg.setVisible(true);
+            dout2.writeUTF(response);
+            
             addEmg addemg = new addEmg(this,true);
             addemg.setVisible(true);
             dout2.writeUTF(response);
