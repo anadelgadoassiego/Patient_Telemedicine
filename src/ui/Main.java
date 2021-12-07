@@ -129,6 +129,7 @@ public class Main {
                 byte[] emg_values = emg.getPatient_emg();
                 System.out.println(emg_values);
                 List<String> values = new ArrayList();
+                List<Integer> values_int = new ArrayList();
                 String pasar = "";
                 for (int i = 0; i < (emg_values.length) - 1; i++) {
                     char value = (char) emg_values[i];
@@ -146,7 +147,9 @@ public class Main {
                     pasar = "";
 
                 }
-                System.out.println(values.toString());
+                for (int i = 0; i < (values.size()) - 1; i++) {
+                    values_int.add(Integer.parseInt(values.get(i)));
+                }
             }
         }
         if (!found) {
@@ -177,6 +180,8 @@ public class Main {
                 found = true;
                 byte[] ecg_values = ecg.getPatient_ecg();
                 List<String> values = new ArrayList();
+                List<Integer> values_int = new ArrayList();
+
                 String pasar = "";
 
                 for (int i = 0; i < (ecg_values.length) - 1; i++) {
@@ -196,6 +201,9 @@ public class Main {
 
                 }
                 System.out.println(values.toString());
+                for (int i = 0; i < (values.size()) - 1; i++) {
+                    values_int.add(Integer.parseInt(values.get(i)));
+                }
             }
         }
         if (!found) {

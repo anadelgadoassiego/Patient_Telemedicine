@@ -77,14 +77,12 @@ public class ClientSendCharactersViaNetwork2 {
                         System.out.println(okay);
                         if (okay.equals("Welcome patient !")) {
                            menuPatient();
-                           //releaseResources2(outputStream, console, inputStream, dint, dout);
+                        }else if(okay.equals("Welcome doctor !")){
+                             System.out.println("Wrong credentials, please try again");
+                        }else{
+                             System.out.println(okay);
                         }
-                        /*socket = new Socket("192.168.68.112", 9000);
-                        outputStream = socket.getOutputStream();
-                        inputStream = socket.getInputStream();
-                        dint= new DataInputStream(inputStream);
-                        console = (System.in);
-                        dout = new DataOutputStream(outputStream);*/
+                        
                         break;
                         
                         
