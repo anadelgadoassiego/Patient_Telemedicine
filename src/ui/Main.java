@@ -13,7 +13,9 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.security.MessageDigest;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import pojos.Doctor;
 import pojos.Ecg;
@@ -95,6 +97,26 @@ public class Main {
         return response_form;
     }
 
+    public static String completeForm_ecg_emg() throws Exception {
+        String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+        String response_form = "";
+
+        System.out.println("Please answer the following questions.");
+        System.out.println("For each question, enter a number between 1 (not likely) to 10 (very likely)");
+        Integer q1 = getIntFromKeyboard1to10("1. Level of laboral concerns");
+        Integer q2 = getIntFromKeyboard1to10("2. Level of personal concerns");
+        Integer q3 = getIntFromKeyboard1to10("3. Have you been stress today?");
+        Integer q4 = getIntFromKeyboard1to10("4. Do you feel tired?");
+        Integer q5 = getIntFromKeyboard1to10("5. Have you noticed that you grind/clench your teeth during the day?");
+        String q6 = getStringFromKeyboard("6. Additional important information you want to share");
+        Calendar c1 = Calendar.getInstance();
+        sdf.format(c1.getTime());
+
+        response_form = q1 + "," + q2 + "," + q3 + "," + q4 + "," + q5 + "," + q6 + "," + sdf;
+        return response_form;
+    }
+    
     public static String addEMG_addECG() throws Exception {
         String response_EMG_ECG = "";
         System.out.println("Please, enter the following information");

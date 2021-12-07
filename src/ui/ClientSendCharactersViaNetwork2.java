@@ -151,6 +151,9 @@ public class ClientSendCharactersViaNetwork2 {
                         System.out.println(okay);
                         break;
                     case 2:
+                        String response_form_ecg_emg = ui.Main.completeForm_ecg_emg();
+                        dout2.writeUTF(response_form_ecg_emg);
+                        
                         String response_EMG_ECG = ui.Main.addEMG_addECG();
                         dout2.writeUTF(response_EMG_ECG);
                         BITalino.BitalinoDemo.main(socket);
