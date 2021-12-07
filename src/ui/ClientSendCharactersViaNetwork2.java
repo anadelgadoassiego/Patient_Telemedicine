@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.ObjectInputStream;
 import java.io.OutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,7 +27,7 @@ public class ClientSendCharactersViaNetwork2 {
     public static void main(String args[]) throws IOException, Exception {
         int byteRead;
 
-        socket = new Socket("192.168.1.131", 9000);
+        socket = new Socket(InetAddress.getLocalHost(), 9000);
         InputStream console;
         InputStream inputStream;
         OutputStream outputStream;

@@ -127,6 +127,7 @@ public class Main {
                 System.out.println(emg);
                 found = true;
                 byte[] emg_values = emg.getPatient_emg();
+                System.out.println(emg_values);
                 List<String> values = new ArrayList();
                 String pasar = "";
                 for (int i = 0; i < (emg_values.length) - 1; i++) {
