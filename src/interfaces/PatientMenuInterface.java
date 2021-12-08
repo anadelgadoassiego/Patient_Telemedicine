@@ -318,7 +318,7 @@ public class PatientMenuInterface extends javax.swing.JFrame {
             boolean found = false;
             String month = JOptionPane.showInputDialog("Introduce the month");
             String day = JOptionPane.showInputDialog("Introduce the day");
-            String name_emg = month + day  ;
+            String name_emg = day + month  ;
             String name_select;
             for (Emg emg2  : emgList) {
                  name_select = emg2.getName_emg();
@@ -331,7 +331,7 @@ public class PatientMenuInterface extends javax.swing.JFrame {
        
             String position2 = JOptionPane.showInputDialog("Introduce the position");
             int position = parseInt(position2);
-            name_emg = "EMG_" + month +day + "_" + position + ".txt" ; 
+            name_emg = "EMG_" + day +month + "_" + position + ".txt" ; 
             for (Emg emg2 : emgList){
                 name_select = emg2.getName_emg();
                  if (name_select.equals(name_emg)){
@@ -399,7 +399,7 @@ public class PatientMenuInterface extends javax.swing.JFrame {
             boolean found = false;
             String month = JOptionPane.showInputDialog("Introduce the month");
             String day = JOptionPane.showInputDialog("Introduce the day");
-            String name_ecg = month + day ;
+            String name_ecg = day + month ;
             String name_select;
             for (Ecg ecg  : ecgList) {
                  name_select = ecg.getName_ecg();
@@ -411,7 +411,7 @@ public class PatientMenuInterface extends javax.swing.JFrame {
 
             String position2 = JOptionPane.showInputDialog("Introduce the position");
             int position = parseInt(position2);
-            name_ecg = "ECG_" + month + day + "_" + position + ".txt"; 
+            name_ecg = "ECG_" + day + month + "_" + position + ".txt"; 
             for (Ecg ecg : ecgList){
                 name_select = ecg.getName_ecg();
                  if (name_select.equals(name_ecg)){
