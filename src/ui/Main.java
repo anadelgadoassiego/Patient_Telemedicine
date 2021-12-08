@@ -169,7 +169,8 @@ public class Main {
                     pasar = "";
 
                 }
-                for (int i = 0; i < (values.size()) - 1; i++) {
+                System.out.println(values.toString());
+                for (int i = 1; i < (values.size()) - 1; i++) {
                     values_int.add(Integer.parseInt(values.get(i)));
                 }
             }
@@ -223,7 +224,7 @@ public class Main {
 
                 }
                 System.out.println(values.toString());
-                for (int i = 0; i < (values.size()) - 1; i++) {
+                for (int i = 1; i < (values.size()) - 1; i++) {
                     values_int.add(Integer.parseInt(values.get(i)));
                 }
             }
