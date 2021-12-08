@@ -37,6 +37,7 @@ public class PatientMenuInterface extends javax.swing.JFrame {
     public static ObjectInputStream objectInputStream = null;
     public static List<Doctor> doctorList = new ArrayList <Doctor>();
     public static int id = 0;
+    public static List<Integer> values_int_public = new ArrayList();
     /**
      * Creates new form signUp
      */

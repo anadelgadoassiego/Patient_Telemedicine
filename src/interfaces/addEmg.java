@@ -132,6 +132,7 @@ public class addEmg extends javax.swing.JDialog {
             error = true;
         }
         PatientMenuInterface.response = month + day + "_" + ult ;
+        this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
