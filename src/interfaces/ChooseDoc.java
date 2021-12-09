@@ -90,7 +90,7 @@ public class ChooseDoc extends javax.swing.JDialog {
         // TODO add your handling code here:
         String id2 = JOptionPane.showInputDialog("Introduce the id of the doctor you would like to choose: ");
         int id = parseInt(id2);
-        PatientMenuInterface.id = id;
+        PatientMenuInterface1.id = id;
         this.setVisible(false);
     }//GEN-LAST:event_randomActionPerformed
 
@@ -103,11 +103,12 @@ public class ChooseDoc extends javax.swing.JDialog {
             name_select_doctor = doctor.getFull_name();
             if (name_select_doctor.contains(name_doctor)) {
                 
-                PatientMenuInterface p = new PatientMenuInterface();
+                PatientMenuInterface1 p = new PatientMenuInterface1();
                 JOptionPane.showMessageDialog(p, doctor.toString());    
             }
         String id = JOptionPane.showInputDialog("Now introduce the ID of the doctor you would like to choose: "); 
-        PatientMenuInterface.id = parseInt(id);
+        System.out.println("id doctor: "+id);
+        PatientMenuInterface1.id = Integer.parseInt(id);
         this.setVisible(false);
         }
     }//GEN-LAST:event_knownActionPerformed

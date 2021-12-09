@@ -267,12 +267,12 @@ public class PatientMenuInterface1 extends javax.swing.JFrame {
             FormularyEXG exg = new FormularyEXG(this,true);
             exg.setVisible(true);
             dout2.writeUTF(response);
-            
+            System.out.println("response int: "+response);
             addEmg addemg = new addEmg(this,true);
             addemg.setVisible(true);
             dout2.writeUTF(response);
             BITalino.BitalinoDemo.main(socket);
-            
+            System.out.println("response 2: "+response);
             
             
         } catch (IOException ex) {
@@ -454,7 +454,7 @@ public class PatientMenuInterface1 extends javax.swing.JFrame {
     private void docActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_docActionPerformed
         try {
             // TODO add your handling code here:
-            doctorList = null;
+            
             int entero = 7;
             dout2.writeInt(entero);
            
@@ -468,13 +468,14 @@ public class PatientMenuInterface1 extends javax.swing.JFrame {
         
             PatientMenuInterface1 p = new PatientMenuInterface1();
             JOptionPane.showMessageDialog(p, "Press OK to see the doctor's list");
-            for (Doctor doctor : doctorList) {
-                JOptionPane.showMessageDialog(p, doctor.toString());    
-            }
+            //for (Doctor doctor : doctorList) {
+            JOptionPane.showMessageDialog(p, doctorList.toString());    
+            //}
             
             ChooseDoc cdoc = new ChooseDoc(this,true);
             cdoc.setVisible(true);
             
+            System.out.println("id doctor_p:"+id);
             dout2.writeInt(id);
             
             

@@ -499,7 +499,7 @@ public class Formulary extends javax.swing.JDialog {
         
         
         String response_form = q1+","+q2+","+q3+","+q4+","+q5+","+q6+","+q7+","+q8+","+q9+","+q10+","+q11+","+q12+","+q13+","+q14+","+q15+","+q16+","+q17+","+q18+","+q19+","+q20;
-        PatientMenuInterface.response = response_form;
+        PatientMenuInterface1.response = response_form;
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 

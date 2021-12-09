@@ -131,7 +131,7 @@ public class addEmg extends javax.swing.JDialog {
             JOptionPane.showMessageDialog(this, "Error, choose it again", "ERROR", JOptionPane.ERROR_MESSAGE);
             error = true;
         }
-        PatientMenuInterface.response = month + day + "_" + ult ;
+        PatientMenuInterface1.response = month + day + "_" + ult ;
         this.setVisible(false);
     }//GEN-LAST:event_jButton1ActionPerformed
 

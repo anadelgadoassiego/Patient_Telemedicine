@@ -201,7 +201,8 @@ public class FormularyEXG extends javax.swing.JDialog {
         
 
         response_form = q1 + "," + q2 + "," + q3 + "," + q4 + "," + q5 + "," + q6 + "," + dtf;
-        PatientMenuInterface.response = response_form;
+        PatientMenuInterface1.response = response_form;
+        System.out.println("response 3:"+response_form);
         this.setVisible(false);
         
         
