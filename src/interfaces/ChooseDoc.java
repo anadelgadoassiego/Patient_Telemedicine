@@ -35,23 +35,15 @@ public class ChooseDoc extends javax.swing.JDialog {
 
         jLabel1 = new javax.swing.JLabel();
         random = new javax.swing.JButton();
-        known = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        jLabel1.setText("Choose an option between:");
+        jLabel1.setText("Please, press the button:");
 
         random.setText("Id of the Doctor");
         random.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 randomActionPerformed(evt);
-            }
-        });
-
-        known.setText("Name of the Doctor");
-        known.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                knownActionPerformed(evt);
             }
         });
 
@@ -66,10 +58,8 @@ public class ChooseDoc extends javax.swing.JDialog {
                         .addComponent(jLabel1))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(47, 47, 47)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(known)
-                            .addComponent(random))))
-                .addContainerGap(169, Short.MAX_VALUE))
+                        .addComponent(random)))
+                .addContainerGap(183, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -78,9 +68,7 @@ public class ChooseDoc extends javax.swing.JDialog {
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(random)
-                .addGap(18, 18, 18)
-                .addComponent(known)
-                .addContainerGap(44, Short.MAX_VALUE))
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         pack();
@@ -93,25 +81,6 @@ public class ChooseDoc extends javax.swing.JDialog {
         PatientMenuInterface1.id = id;
         this.setVisible(false);
     }//GEN-LAST:event_randomActionPerformed
-
-    private void knownActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_knownActionPerformed
-        // TODO add your handling code here:
-        List<Doctor> doctorList = PatientMenuInterface.doctorList;
-        String name_select_doctor  = null;
-        String name_doctor = JOptionPane.showInputDialog("Introduce the name of the doctor you would like to choose: ");
-        for (Doctor doctor : doctorList) {
-            name_select_doctor = doctor.getFull_name();
-            if (name_select_doctor.contains(name_doctor)) {
-                
-                PatientMenuInterface1 p = new PatientMenuInterface1();
-                JOptionPane.showMessageDialog(p, doctor.toString());    
-            }
-        String id = JOptionPane.showInputDialog("Now introduce the ID of the doctor you would like to choose: "); 
-        System.out.println("id doctor: "+id);
-        PatientMenuInterface1.id = Integer.parseInt(id);
-        this.setVisible(false);
-        }
-    }//GEN-LAST:event_knownActionPerformed
 
     /**
      * @param args the command line arguments
@@ -157,7 +126,6 @@ public class ChooseDoc extends javax.swing.JDialog {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JButton known;
     private javax.swing.JButton random;
     // End of variables declaration//GEN-END:variables
 }
