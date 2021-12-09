@@ -185,6 +185,7 @@ public class CreateLoginInterface extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(c, "Welcome patient!");
                 
                 PatientMenuInterface pat = new PatientMenuInterface();
+                interfaces.PatientMenuInterface1.main();
                 pat.setVisible(true);
                 this.setVisible(false);
             } else{

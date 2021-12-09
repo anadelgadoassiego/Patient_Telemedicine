@@ -5,6 +5,7 @@
 package interfaces;
 
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
 
@@ -146,8 +147,8 @@ public class FormularyEXG extends javax.swing.JDialog {
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         // TODO add your handling code here:
-        String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
-        SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
+        //String DATE_FORMAT_NOW = "yyyy-MM-dd HH:mm:ss";
+        //SimpleDateFormat sdf = new SimpleDateFormat(DATE_FORMAT_NOW);
         String response_form = "";
         int q1 = 0;
         int q2 = 0;
@@ -194,10 +195,12 @@ public class FormularyEXG extends javax.swing.JDialog {
             error = true;
         }
         
-        Calendar c1 = Calendar.getInstance();
-        sdf.format(c1.getTime());
+        //Calendar c1 = Calendar.getInstance();
+        //sdf.format(c1.getTime());
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        
 
-        response_form = q1 + "," + q2 + "," + q3 + "," + q4 + "," + q5 + "," + q6 + "," + sdf;
+        response_form = q1 + "," + q2 + "," + q3 + "," + q4 + "," + q5 + "," + q6 + "," + dtf;
         PatientMenuInterface.response = response_form;
         this.setVisible(false);
         

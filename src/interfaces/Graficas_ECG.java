@@ -37,7 +37,7 @@ public class Graficas_ECG extends javax.swing.JFrame {
     public Graficas_ECG() {
         initComponents();
         //java.util.List<Integer> datos_EMG = new ArrayList();
-        datos_EMG = DoctorMenu.values_int_public;
+        datos_EMG = PatientMenuInterface1.values_int_public;
        
         
         int length = datos_EMG.size();
