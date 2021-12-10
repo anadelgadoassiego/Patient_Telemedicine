@@ -87,6 +87,11 @@ public class AddPatient2 extends javax.swing.JDialog {
         });
 
         jTextField2.setText("jTextField2");
+        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jTextField2ActionPerformed(evt);
+            }
+        });
 
         jTextField3.setText("jTextField3");
 
@@ -190,21 +195,21 @@ public class AddPatient2 extends javax.swing.JDialog {
             error = true;
         }
         try {
-            id = Integer.parseInt(this.jTextField2.getText());
+            age = Integer.parseInt(this.jTextField2.getText());
         }
         catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Error, choose it again", "ERROR", JOptionPane.ERROR_MESSAGE);
             error = true;
         }
         try {
-            age = Integer.parseInt(this.jTextField3.getText());
+            height = Float.parseFloat(this.jTextField4.getText());
         }
         catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Error, choose it again", "ERROR", JOptionPane.ERROR_MESSAGE);
             error = true;
         }
         try {
-            weight = Float.parseFloat(this.jTextField4.getText());
+            weight = Float.parseFloat(this.jTextField3.getText());
         }
         catch (NumberFormatException ex) {
             JOptionPane.showMessageDialog(this, "Error, choose it again", "ERROR", JOptionPane.ERROR_MESSAGE);
@@ -219,6 +224,10 @@ public class AddPatient2 extends javax.swing.JDialog {
     private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1ActionPerformed
+
+    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jTextField2ActionPerformed
 
     /**
      * @param args the command line arguments
