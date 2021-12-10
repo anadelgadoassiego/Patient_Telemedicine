@@ -271,8 +271,14 @@ public class PatientMenuInterface1 extends javax.swing.JFrame {
             addEmg addemg = new addEmg(this,true);
             addemg.setVisible(true);
             dout2.writeUTF(response);
+            PatientMenuInterface1 p = new PatientMenuInterface1();
+            JOptionPane.showMessageDialog(p, "Bitalino is recording as soon as you press the button, then wait for the next panel");
+
             BITalino.BitalinoDemo.main(socket);
             System.out.println("response 2: "+response);
+            
+            JOptionPane.showMessageDialog(p, "Recording finished");
+            
             
             
         } catch (IOException ex) {
