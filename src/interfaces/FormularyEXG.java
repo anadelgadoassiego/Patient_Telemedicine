@@ -5,6 +5,7 @@
 package interfaces;
 
 import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import javax.swing.JOptionPane;
@@ -198,11 +199,10 @@ public class FormularyEXG extends javax.swing.JDialog {
         //Calendar c1 = Calendar.getInstance();
         //sdf.format(c1.getTime());
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        String dtf_s = dtf.format(LocalDateTime.now());
         
-
-        response_form = q1 + "," + q2 + "," + q3 + "," + q4 + "," + q5 + "," + q6 + "," + dtf;
+        response_form = q1 + "," + q2 + "," + q3 + "," + q4 + "," + q5 + "," + q6 + "," + dtf_s;
         PatientMenuInterface1.response = response_form;
-        System.out.println("response 3:"+response_form);
         this.setVisible(false);
         
         
