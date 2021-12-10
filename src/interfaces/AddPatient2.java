@@ -59,7 +59,7 @@ public class AddPatient2 extends javax.swing.JDialog {
             }
         });
 
-        jLabel7.setText("UserName");
+        jLabel7.setText("UserName(DNI)");
 
         jLabel8.setText("Password");
 
