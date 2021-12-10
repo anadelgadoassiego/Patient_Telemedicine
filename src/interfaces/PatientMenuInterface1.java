@@ -303,7 +303,7 @@ public class PatientMenuInterface1 extends javax.swing.JFrame {
             while ((tmp = objectInputStream.readObject()) != null) {
                 Emg emg = (Emg) tmp;
                 emgList.add(emg);
-                
+            }   
                 
                 
             boolean found = false;
@@ -320,13 +320,11 @@ public class PatientMenuInterface1 extends javax.swing.JFrame {
             } 
         
        
-            String position2 = JOptionPane.showInputDialog("Introduce the position");
-            int position = parseInt(position2);
+            int position = Integer.parseInt(JOptionPane.showInputDialog("Introduce the number of the EMG: "));
             name_emg = "EMG_" + month + day + "_" + position + ".txt" ; 
             for (Emg emg2 : emgList){
                 name_select = emg2.getName_emg();
                  if (name_select.equals(name_emg)){
-                    System.out.println(emg2);
                     found= true;
                     byte [] emg_values = emg2.getPatient_emg();
                     List <String> values = new ArrayList();
@@ -361,7 +359,7 @@ public class PatientMenuInterface1 extends javax.swing.JFrame {
                 PatientMenuInterface1 p = new PatientMenuInterface1();
                 JOptionPane.showMessageDialog(p, "Does not exist!");
             }
-            }
+            
         } catch (IOException ex) {
             Logger.getLogger(PatientMenuInterface1.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) {
